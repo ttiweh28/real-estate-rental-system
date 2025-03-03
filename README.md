@@ -1,6 +1,6 @@
 # 🚀 Real Estate Listings and Rental System
 
-A brief description of what this project does and who it's for.
+Admin adds property owner, propert owner then list their properties, and the tenants can view, book and sign lease for the property of their choice.
 
 ## 📖 Contents
 

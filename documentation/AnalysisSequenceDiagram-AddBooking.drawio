@@ -37,7 +37,7 @@
         <mxCell id="kn3cGLpq9XNQ-297oNUr-12" value="3.enterBookingDetails()" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="140" y="334" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="kn3cGLpq9XNQ-297oNUr-13" value="2.promptBookingDtails()" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="aM9ryv3xv72pqoxQDRHE-2">
+        <mxCell id="kn3cGLpq9XNQ-297oNUr-13" value="2.promptBookingDetails()" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="aM9ryv3xv72pqoxQDRHE-2">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="240" y="300" as="sourcePoint" />
             <mxPoint x="90" y="300" as="targetPoint" />

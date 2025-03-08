@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  backoffice:
+    build:
+      context: .
+      dockerfile: backoffice/Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backoffice:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    ports:
+      - "4001:4001"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development

@@ -24,6 +24,7 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "approved_by_propertyowner_id")
     private PropertyOwner approvedBy;
+
     @ManyToOne
     @JoinColumn(name = "tenant_id", nullable = false)
     private Tenant tenant;

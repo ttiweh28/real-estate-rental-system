@@ -14,7 +14,6 @@ import java.util.List;
 @EqualsAndHashCode
 public class Tenant extends User {
 
-    private Long tenantId;
     @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lease> leases;
     @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, orphanRemoval = true)

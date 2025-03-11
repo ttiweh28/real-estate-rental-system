@@ -21,7 +21,6 @@ public class Property {
     private Long propertyId;
 
     private String propertyType;
-
     @ElementCollection
     @CollectionTable(name = "property_amenities", joinColumns = @JoinColumn(name = "property_id"))
     @Column(name = "amenity")

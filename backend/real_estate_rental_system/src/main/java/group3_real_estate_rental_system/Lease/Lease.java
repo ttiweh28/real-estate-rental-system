@@ -18,6 +18,7 @@ public class Lease {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long LeaseId;
 
+
     private String leaseURL;
     private LocalDateTime tenantSignedDate;
     private LocalDateTime propertyOwnerSignedDate;

@@ -1,4 +1,4 @@
-package cs425group3_real_estate_rental_system.Lease;
+package group3_real_estate_rental_system.Lease;
 
 public enum LeaseStatus {
     ACTIVE,

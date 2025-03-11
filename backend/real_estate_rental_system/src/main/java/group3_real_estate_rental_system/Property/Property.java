@@ -1,15 +1,15 @@
-package cs425group3_real_estate_rental_system.Property;
+package group3_real_estate_rental_system.Property;
 
-import cs425group3_real_estate_rental_system.Lease.Lease;
-import cs425group3_real_estate_rental_system.User.entity.PropertyOwner;
-import cs425group3_real_estate_rental_system.common.Address;
+import group3_real_estate_rental_system.Lease.Lease;
+import group3_real_estate_rental_system.User.entity.PropertyOwner;
+import group3_real_estate_rental_system.common.Address;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString

@@ -1,14 +1,14 @@
-package cs425group3_real_estate_rental_system.Booking;
+package group3_real_estate_rental_system.Booking;
 
-import cs425group3_real_estate_rental_system.User.entity.PropertyOwner;
-import cs425group3_real_estate_rental_system.User.entity.Tenant;
+import group3_real_estate_rental_system.User.entity.PropertyOwner;
+import group3_real_estate_rental_system.User.entity.Tenant;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -18,6 +18,7 @@ public class Booking {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
+
     private LocalDateTime bookingDate;
     private BookingStatus bookingStatus;
     @ManyToOne

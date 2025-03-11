@@ -1,4 +1,4 @@
-package cs425group3_real_estate_rental_system.Property;
+package group3_real_estate_rental_system.Property;
 
 public enum PropertyStatus {
     AVAILABLE,

@@ -1,7 +1,0 @@
-{
-    "productOwners": [
-      { "id": 1, "name": "John Doe", "email": "john@example.com", "role": "admin", "password":"123" },
-      { "id": 2, "name": "Jane Smith", "email": "jane@example.com", "role": "user", "password":"123" }
-    ]
-  }
-  

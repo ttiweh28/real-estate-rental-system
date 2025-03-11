@@ -1,2 +1,42 @@
+# Ignore Maven target directory (compiled files)
+target/
+
+# Ignore IntelliJ IDEA files
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Ignore Eclipse files
+.classpath
+.project
+.settings/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore OS-specific files
 .DS_Store
-.idea
+Thumbs.db
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore temporary files
+*.swp
+*.swo
+*.bak
+
+# Ignore compiled class files
+*.class
+
+# Ignore environment-specific configuration files
+.env
+application.properties
+application.yml
+application-dev.properties
+application-prod.properties
+
+backend/.idea
+

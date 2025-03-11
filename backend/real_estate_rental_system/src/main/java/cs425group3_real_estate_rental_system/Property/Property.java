@@ -19,11 +19,14 @@ public class Property {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long propertyId;
+
     private String propertyType;
+
     @ElementCollection
     @CollectionTable(name = "property_amenities", joinColumns = @JoinColumn(name = "property_id"))
     @Column(name = "amenity")
     private List<String> amenities;
+
     private PropertyStatus availabilityStatus;
     @Embedded
     private Address address;

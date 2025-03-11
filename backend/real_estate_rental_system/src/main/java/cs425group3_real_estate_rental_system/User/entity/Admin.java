@@ -14,7 +14,6 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class Admin extends User {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long adminId;
     @OneToMany(mappedBy = "propertyOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lease> leases;

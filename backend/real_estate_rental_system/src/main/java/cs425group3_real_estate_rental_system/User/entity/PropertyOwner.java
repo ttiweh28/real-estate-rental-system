@@ -18,7 +18,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class PropertyOwner extends User {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long propertyOwnerId;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lease> leases;
@@ -26,7 +26,5 @@ public class PropertyOwner extends User {
     private List<Property> properties;
     @OneToMany(mappedBy = "approvedBy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> Bookings;
-
-
 
 }

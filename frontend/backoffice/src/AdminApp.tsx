@@ -7,8 +7,8 @@ import authProvider from "./state/providers/authProvider";
 
 const dataProvider = fakeDataProvider({
   PropertyOwners: [
-    { id: 1, firstName: "Justine", lastName: "Okumu" },
-    { id: 2, firstName: "Sunday", lastName: "Nyeko" },
+    { id: 1, firstName: "Justine", lastName: "Okumu", username: "okumujustine" },
+    { id: 2, firstName: "Sunday", lastName: "Nyeko", username: "sundayn" },
   ],
 });
 

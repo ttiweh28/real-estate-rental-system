@@ -1,9 +1,11 @@
+import { bookings } from "./booking";
+import { properties } from "./property";
 import { productOwners } from "./property-owners";
 
-export function getResources(user: any) {
-  if (user.role === "admin") {
+export function getResources(role: string) {
+  if (role === "admin") {
     return [productOwners];
   }
 
-  return [];
+  return [properties, bookings];
 }

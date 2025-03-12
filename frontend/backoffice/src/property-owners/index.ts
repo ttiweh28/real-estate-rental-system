@@ -5,7 +5,7 @@ import { EditPropertyOwner } from "./edit";
 import { ListPropertyOwners } from "./list";
 
 export const productOwners: ResourceProps = {
-    name: "PropertyOwners",
+    name: "propertyOwners",
     options: { label: "Property Owners" },
     icon: Person2,
     list: ListPropertyOwners,

@@ -3,7 +3,7 @@ import { Bookmark } from "@mui/icons-material";
 
 export const bookings: ResourceProps = {
     name: "bookings",
-    options: { label: "Booking" },
+    options: { label: "Bookings" },
     icon: Bookmark,
     list: ListGuesser,
   };

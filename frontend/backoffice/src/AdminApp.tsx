@@ -7,7 +7,7 @@ import authProvider from "./state/providers/authProvider";
 import { I_User } from "./types/authTypes";
 
 const dataProvider = fakeDataProvider({
-  PropertyOwners: [
+  propertyOwners: [
     {
       id: 1,
       firstName: "Justine",

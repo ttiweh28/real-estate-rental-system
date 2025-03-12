@@ -1,5 +1,5 @@
-import { bookings } from "./booking";
-import { properties } from "./property";
+import { bookings } from "./bookings";
+import { properties } from "./properties";
 import { productOwners } from "./property-owners";
 
 export function getResources(role: string) {

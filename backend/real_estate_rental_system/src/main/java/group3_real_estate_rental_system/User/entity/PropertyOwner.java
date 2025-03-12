@@ -16,9 +16,6 @@ import java.util.List;
 @EqualsAndHashCode
 public class PropertyOwner extends User {
 
-    private Long propertyOwnerId;
-
-
     @OneToMany(mappedBy = "propertyOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lease> leases;
 

@@ -21,16 +21,22 @@ public class Property {
     private Long propertyId;
 
     private String propertyType;
+
+    private String propertyDescription;
+
     @ElementCollection
     @CollectionTable(name = "property_amenities", joinColumns = @JoinColumn(name = "property_id"))
     @Column(name = "amenity")
     private List<String> amenities;
 
     private PropertyStatus availabilityStatus;
+
     @Embedded
     private Address address;
+
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Lease> leases;
+
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private PropertyOwner owner;

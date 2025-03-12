@@ -20,7 +20,9 @@ public class Booking {
     private Long bookingId;
 
     private LocalDateTime bookingDate;
+
     private BookingStatus bookingStatus;
+
     @ManyToOne
     @JoinColumn(name = "approved_by_propertyowner_id")
     private PropertyOwner approvedBy;

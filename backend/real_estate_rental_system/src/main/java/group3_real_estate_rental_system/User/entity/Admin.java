@@ -13,6 +13,5 @@ import java.util.List;
 @EqualsAndHashCode
 public class Admin extends User {
 
-    private String role;
 
 }

@@ -10,7 +10,11 @@ public record Address (
         String state,
         String zipCode,
         String country
-){}
+){
+    public Address() {
+        this("", "", "", "", "");  // Default empty values
+    }
+}
 
 
 

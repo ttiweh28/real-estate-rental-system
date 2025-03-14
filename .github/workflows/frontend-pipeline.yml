@@ -1,0 +1,41 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches:
+      - frontend-main
+
+jobs:
+  backoffice-initial-checks:
+    name: Backoffice App Initial Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd frontend/backoffice
+          npm ci
+
+      - name: Backoffice Link Check
+        run: |
+          cd frontend/backoffice
+          npm run lint
+
+  client-initial-checks:
+    name: Cleint App Initial Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd frontend/backoffice
+          npm ci
+
+      - name: Client App Link Check
+        run: |
+          cd frontend/backoffice
+          npm run lint

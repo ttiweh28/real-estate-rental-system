@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  useRedirect,
-  useNotify,
-  useDataProvider,
-  useGetOne,
-  Edit,
-  EditProps,
-  useEditContext,
-} from "react-admin";
+import { useRedirect, useNotify, useDataProvider, Edit, EditProps, useEditContext } from "react-admin";
 import {
   Card,
   CardContent,
@@ -23,7 +15,7 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
-import { ArrowLeft, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { T_PropertyEdit } from "@/types/property";
 
 const steps = ["Property Details", "Upload Images", "Review & Submit"];
@@ -84,7 +76,7 @@ export const EditProperty = () => {
       notify("Property updated successfully", { type: "success" });
       redirect("/properties");
     } catch (error) {
-      notify("Error updating property", { type: "error" });
+      notify(`Error updating property ${error}`, { type: "error" });
     }
   };
 

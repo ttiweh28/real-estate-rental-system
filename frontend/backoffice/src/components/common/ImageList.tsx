@@ -9,8 +9,11 @@ import {
 } from "react-admin";
 import { T_Property } from "@/types/property";
 
-const times = (nbChildren: number, fn: (key: number) => any) =>
-  Array.from({ length: nbChildren }, (_, key) => fn(key));
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const times = (nbChildren: number, fn: (key: number) => any) => {
+  return Array.from({ length: nbChildren }, (_, key) => fn(key))
+}
 
 const LoadingGridList = () => (
   <Box display="flex" flexWrap="wrap" width={1008} gap={1}>
@@ -80,7 +83,7 @@ const PropertyCard = (props: { record?: T_Property }) => {
 };
 
 const LoadedGridList = () => {
-  const { data, error, isPending } = useListContext<any>();
+  const { data, error, isPending } = useListContext<T_Property>();
 
   if (isPending || error) return null;
 

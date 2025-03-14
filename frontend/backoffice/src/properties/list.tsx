@@ -1,5 +1,4 @@
 import { List, ListProps, useListContext } from "react-admin";
-import { Container } from "@mui/material";
 import { T_Property } from "@/types/property";
 import { PropertyCard } from "@/components/properties/PropertyCard";
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRedirect, useNotify, useDataProvider, Button } from "react-admin";
 import {
   Card,
@@ -11,12 +11,10 @@ import {
   Step,
   StepLabel,
   IconButton,
-  Dialog,
-  DialogContent,
   Chip,
   InputAdornment,
 } from "@mui/material";
-import { ArrowLeft, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { T_PropertyCreate } from "@/types/property";
 
 const steps = ["Property Details", "Upload Images", "Review & Submit"];
@@ -26,7 +24,6 @@ const CreateProperty = () => {
   const notify = useNotify();
   const dataProvider = useDataProvider();
   const [activeStep, setActiveStep] = useState(0);
-  const [zoomImage, setZoomImage] = useState<string | null>(null);
   const [newAmenity, setNewAmenity] = useState("");
   const [formData, setFormData] = useState<T_PropertyCreate>({
     name: "",
@@ -38,6 +35,7 @@ const CreateProperty = () => {
     amenities: [],
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -67,6 +65,7 @@ const CreateProperty = () => {
 
   const handleBack = () => setActiveStep((prev) => prev - 1);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -74,7 +73,7 @@ const CreateProperty = () => {
       notify("Property created successfully", { type: "success" });
       redirect("/properties");
     } catch (error) {
-      notify("Error creating property", { type: "error" });
+      notify(`Error creating property ${error}`, { type: "error" });
     }
   };
 
@@ -262,7 +261,6 @@ const CreateProperty = () => {
                           justifyContent: "center",
                           cursor: "pointer",
                         }}
-                        onClick={() => setZoomImage(imgUrl)}
                       >
                         <img
                           src={imgUrl}

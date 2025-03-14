@@ -5,7 +5,6 @@ import { deepmerge } from '@mui/utils';
 import { getResources } from "./resources";
 import { Admin, radiantDarkTheme, Resource } from "react-admin";
 import authProvider from "./state/providers/authProvider";
-import { I_User } from "./types/authTypes";
 
 const dataProvider = fakeDataProvider({
   propertyOwners: [
@@ -126,17 +125,6 @@ const dataProvider = fakeDataProvider({
 });
 
 export default function AdminApp() {
-  const user: I_User = {
-    id: "user456",
-    firstName: "Tiffany",
-    lastName: "Lamaro",
-    username: "tiffany",
-    fullName: "Lamaro Tiffany",
-    role: "admin",
-    password: "1234",
-    avatar: "https://example.com/avatar.jpg",
-  };
-
   const theme = deepmerge(radiantDarkTheme, {
     sidebar: {
         width: 220, // The default value is 240

@@ -1,4 +1,4 @@
-import { ListGuesser, ResourceProps, ShowGuesser } from "react-admin";
+import { ListGuesser, ResourceProps } from "react-admin";
 import { Bookmark } from "@mui/icons-material";
 
 export const bookings: ResourceProps = {

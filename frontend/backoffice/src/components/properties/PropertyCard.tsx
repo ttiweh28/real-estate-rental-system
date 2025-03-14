@@ -8,14 +8,18 @@ import {
   Box,
 } from "@mui/material";
 import { T_Property } from "@/types/property";
+import { useRedirect } from "react-admin";
 
 interface PropertyCardProps {
   property: T_Property;
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+  const redirect = useRedirect();
+
   return (
     <Card
+      onClick={() => redirect("show", "properties", property.id)}
       sx={{
         height: "200px",
         width: "100%",
@@ -59,26 +63,27 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       </Box>
       <CardContent
         sx={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 0,
-          width: '100%',
-          background: 'linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.7))',
+          width: "100%",
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.7))",
           p: 1,
-          '&:last-child': { pb: 1 },
+          "&:last-child": { pb: 1 },
         }}
       >
         <Typography
           variant="subtitle2"
           component="h3"
           sx={{
-            color: 'white',
+            color: "white",
             fontWeight: 600,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            textShadow: '0px 1px 2px rgba(0,0,0,0.5)',
-            fontSize: '0.9rem',
-            letterSpacing: '0.25px',
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            textShadow: "0px 1px 2px rgba(0,0,0,0.5)",
+            fontSize: "0.9rem",
+            letterSpacing: "0.25px",
           }}
         >
           {property.name}

@@ -5,7 +5,6 @@ import { deepmerge } from '@mui/utils';
 import { getResources } from "./resources";
 import { Admin, radiantDarkTheme, Resource } from "react-admin";
 import authProvider from "./state/providers/authProvider";
-import { I_User } from "./types/authTypes";
 
 const dataProvider = fakeDataProvider({
   propertyOwners: [
@@ -24,7 +23,7 @@ const dataProvider = fakeDataProvider({
       name: "Luxurous house",
       banner: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1600',
       location: "Fairfied",
-      price: "$ 45,000",
+      price: "45000",
       images: [
         "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
         "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
@@ -54,7 +53,7 @@ const dataProvider = fakeDataProvider({
         "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f"
       ],
       location: "Fairfied",
-      price: "$ 45,000",
+      price: "45000",
       propertyOwner: {
         id: 2,
         firstName: "Sunday",
@@ -77,7 +76,7 @@ const dataProvider = fakeDataProvider({
         "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f"
       ],
       location: "Seaside",
-      price: "$ 65,000",
+      price: "65000",
       propertyOwner: {
         id: 3,
         firstName: "Grace",
@@ -100,7 +99,7 @@ const dataProvider = fakeDataProvider({
         "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f"
       ],
       location: "Mountain Range",
-      price: "$ 55,000",
+      price: "55000",
       propertyOwner: {
         id: 4,
         firstName: "Peter",
@@ -126,17 +125,6 @@ const dataProvider = fakeDataProvider({
 });
 
 export default function AdminApp() {
-  const user: I_User = {
-    id: "user456",
-    firstName: "Tiffany",
-    lastName: "Lamaro",
-    username: "tiffany",
-    fullName: "Lamaro Tiffany",
-    role: "admin",
-    password: "1234",
-    avatar: "https://example.com/avatar.jpg",
-  };
-
   const theme = deepmerge(radiantDarkTheme, {
     sidebar: {
         width: 220, // The default value is 240

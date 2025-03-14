@@ -1,8 +1,9 @@
-import { ListGuesser, ResourceProps } from "react-admin";
+import { ResourceProps } from "react-admin";
 import { House } from "@mui/icons-material";
 import ListProperties from "./list";
 import CreateProperty from "./create";
 import PropertyShow from "./show";
+import { EditProperties } from "./edit";
 
 export const properties: ResourceProps = {
     name: "properties",
@@ -10,5 +11,6 @@ export const properties: ResourceProps = {
     icon: House,
     list: ListProperties,
     create: CreateProperty,
-    show: PropertyShow
+    show: PropertyShow,
+    edit: EditProperties
   };

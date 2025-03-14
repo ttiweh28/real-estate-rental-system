@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useRedirect, useNotify, useDataProvider, Button } from "react-admin";
+import React, { useState, useEffect } from "react";
+import { useRedirect, useNotify, useDataProvider, Edit, EditProps, useEditContext } from "react-admin";
 import {
   Card,
   CardContent,
@@ -13,87 +13,111 @@ import {
   IconButton,
   Chip,
   InputAdornment,
+  Button,
 } from "@mui/material";
 import { Plus, X } from "lucide-react";
-import { T_PropertyCreate } from "@/types/property";
+import { T_PropertyEdit } from "@/types/property";
 
 const steps = ["Property Details", "Upload Images", "Review & Submit"];
 
-const CreateProperty = () => {
+export const EditProperties = (props: EditProps) => {
+  return (
+    <Edit {...props}>
+      <EditProperty />
+    </Edit>
+  );
+};
+
+export const EditProperty = () => {
+  const { record, isLoading } = useEditContext();
+
   const redirect = useRedirect();
   const notify = useNotify();
   const dataProvider = useDataProvider();
+
   const [activeStep, setActiveStep] = useState(0);
   const [newAmenity, setNewAmenity] = useState("");
-  const [formData, setFormData] = useState<T_PropertyCreate>({
-    name: "",
-    description: "",
-    price: "",
-    location: "",
-    banner: "",
-    images: [],
-    amenities: [],
-  });
+  const [formData, setFormData] = useState<T_PropertyEdit | null>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleInputChange = (e: any) => {
+  useEffect(() => {
+    if (record) {
+      setFormData({
+        id: record.id,
+        name: record.name,
+        location: record.location,
+        price: record.price,
+        description: record.description,
+        banner: record.banner,
+        images: record.images || [],
+        amenities: record.amenities || [],
+      });
+    }
+  }, [record]);
+
+  if (isLoading || !formData) return <Typography>Loading...</Typography>;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => (prev ? { ...prev, [name]: value } : prev));
+  };
+
+  const handleNext = () => setActiveStep((prev) => prev + 1);
+  const handleBack = () => setActiveStep((prev) => prev - 1);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Upload only new images
+    try {
+      await dataProvider.update("properties", {
+        id: formData.id,
+        data: formData,
+        previousData: record,
+      });
+      notify("Property updated successfully", { type: "success" });
+      redirect("/properties");
+    } catch (error) {
+      notify(`Error updating property ${error}`, { type: "error" });
+    }
+  };
+
+  const handleAddAmenity = () => {
+    if (newAmenity.trim() && !formData.amenities.includes(newAmenity.trim())) {
+      setFormData((prev) =>
+        prev
+          ? { ...prev, amenities: [...prev.amenities, newAmenity.trim()] }
+          : prev
+      );
+      setNewAmenity("");
+    }
+  };
+
+  const handleRemoveAmenity = (amenityToRemove: string) => {
+    setFormData((prev) =>
+      prev
+        ? {
+            ...prev,
+            amenities: prev.amenities.filter(
+              (amenity) => amenity !== amenityToRemove
+            ),
+          }
+        : prev
+    );
   };
 
   const isStepValid = () => {
     if (activeStep === 0) {
       return (
-        formData.name && formData.location && formData.price && formData.description && formData.amenities.length > 0
+        formData.name &&
+        formData.location &&
+        formData.price &&
+        formData.description &&
+        formData.amenities.length > 0
       );
     }
     if (activeStep === 1) {
       return formData.images.length > 1;
     }
     return true;
-  };
-
-  const handleNext = () => {
-    if (isStepValid()) {
-      setActiveStep((prev) => prev + 1);
-    } else {
-      notify("Please fill all required fields before proceeding", {
-        type: "warning",
-      });
-    }
-  };
-
-  const handleBack = () => setActiveStep((prev) => prev - 1);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      await dataProvider.create("properties", { data: formData });
-      notify("Property created successfully", { type: "success" });
-      redirect("/properties");
-    } catch (error) {
-      notify(`Error creating property ${error}`, { type: "error" });
-    }
-  };
-
-  const handleAddAmenity = () => {
-    if (newAmenity.trim() && !formData.amenities.includes(newAmenity.trim())) {
-      setFormData((prev) => ({
-        ...prev,
-        amenities: [...prev.amenities, newAmenity.trim()],
-      }));
-      setNewAmenity("");
-    }
-  };
-
-  const handleRemoveAmenity = (amenityToRemove: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      amenities: prev.amenities.filter(
-        (amenity) => amenity !== amenityToRemove
-      ),
-    }));
   };
 
   return (
@@ -136,7 +160,7 @@ const CreateProperty = () => {
                   label="Price"
                   name="price"
                   type="number"
-                  value={formData.price}
+                  value={parseInt(formData.price)}
                   onChange={handleInputChange}
                   InputProps={{
                     startAdornment: (
@@ -169,10 +193,7 @@ const CreateProperty = () => {
                     onChange={(e) => setNewAmenity(e.target.value)}
                     placeholder="Add amenity"
                     onKeyUp={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleAddAmenity();
-                      }
+                      if (e.key === "Enter") handleAddAmenity();
                     }}
                   />
                   <Button
@@ -180,7 +201,7 @@ const CreateProperty = () => {
                     onClick={handleAddAmenity}
                     startIcon={<Plus size={20} />}
                   >
-                    <span>Add</span>
+                    Add
                   </Button>
                 </Box>
                 <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
@@ -203,9 +224,7 @@ const CreateProperty = () => {
                   ml: 3,
                 }}
               >
-                <Button onClick={handleNext} disabled={!isStepValid()}>
-                  <span>Next</span>
-                </Button>
+                <Button onClick={handleNext}>Next</Button>
               </Box>
             </Grid>
           )}
@@ -233,10 +252,13 @@ const CreateProperty = () => {
                     hidden
                     onChange={(e) => {
                       const files = Array.from(e.target.files || []);
-                      setFormData((prev) => ({
-                        ...prev,
-                        images: [...prev.images, ...files],
-                      }));
+                      setFormData((prev) => {
+                        if (!prev) return prev;
+                        return {
+                          ...prev,
+                          images: [...prev.images, ...files],
+                        };
+                      });
                     }}
                   />
                 </Box>
@@ -245,7 +267,6 @@ const CreateProperty = () => {
               <Grid item xs={12}>
                 <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: 2 }}>
                   {formData.images.map((file, index) => {
-                    const imgUrl = URL.createObjectURL(file);
                     return (
                       <Box
                         key={index}
@@ -263,7 +284,11 @@ const CreateProperty = () => {
                         }}
                       >
                         <img
-                          src={imgUrl}
+                          src={
+                            file instanceof File
+                              ? URL.createObjectURL(file)
+                              : file
+                          }
                           alt={`Preview ${index + 1}`}
                           style={{
                             maxWidth: "100%",
@@ -281,10 +306,20 @@ const CreateProperty = () => {
                           }}
                           onClick={(e) => {
                             e.stopPropagation();
-                            setFormData((prev) => ({
-                              ...prev,
-                              images: prev.images.filter((_, i) => i !== index),
-                            }));
+
+                            if (file instanceof File) {
+                              setFormData((prev) => {
+                                if (!prev) return prev;
+                                return {
+                                  ...prev,
+                                  images: prev.images.filter(
+                                    (_, i) => i !== index
+                                  ),
+                                };
+                              });
+                            } else {
+                              alert("Delete from database");
+                            }
                           }}
                         >
                           <X size={14} />
@@ -330,11 +365,14 @@ const CreateProperty = () => {
                 </Typography>
                 <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: 2 }}>
                   {formData.images.map((file, index) => {
-                    const imgUrl = URL.createObjectURL(file);
                     return (
                       <img
                         key={index}
-                        src={imgUrl}
+                        src={
+                          file instanceof File
+                            ? URL.createObjectURL(file)
+                            : file
+                        }
                         alt={`Review ${index + 1}`}
                         style={{
                           width: "100px",
@@ -356,16 +394,14 @@ const CreateProperty = () => {
                   ml: 3,
                 }}
               >
-                <Button onClick={handleBack}>
-                  <span>Back</span>
-                </Button>
+                <Button onClick={handleBack}>Back</Button>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   onClick={handleSubmit}
                 >
-                  <span>Submit</span>
+                  Update
                 </Button>
               </Box>
             </Grid>
@@ -376,4 +412,4 @@ const CreateProperty = () => {
   );
 };
 
-export default CreateProperty;
+export default EditProperty;

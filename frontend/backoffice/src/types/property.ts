@@ -27,3 +27,15 @@ export type T_PropertyCreate = {
     description: string,
     amenities: string[],
 }
+
+export type T_PropertyEdit = {
+    id: string;
+    name: string;
+    banner: string;
+    images: (string | File) [];
+    location: string;
+    price: string;
+    description: string;
+    amenities: string[];
+    // newImages: File[];
+};

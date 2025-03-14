@@ -17,6 +17,9 @@ jobs:
         run: |
           cd frontend/backoffice
           npm install
+          
+      - name: Install Netlify CLI Globally
+        run: npm install -g netlify-cli@latest
 
       - name: Build Backoffice App
         run: |
@@ -25,23 +28,3 @@ jobs:
 
       - name: Deploy to Netlify (Backoffice)
         run: npx netlify-cli deploy --prod --dir=frontend/backoffice/.next --site ${{ secrets.NETLIFY_SITE_ID_BACKOFFICE }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
-
-  deploy-client:
-    name: Deploy Client App
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: |
-          cd frontend/client
-          npm install
-
-      - name: Build Client App
-        run: |
-          cd frontend/client
-          npm run build
-
-      - name: Deploy to Netlify (Client)
-        run: npx netlify-cli deploy --prod --dir=frontend/client/.next --site ${{ secrets.NETLIFY_SITE_ID_CLIENT }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}

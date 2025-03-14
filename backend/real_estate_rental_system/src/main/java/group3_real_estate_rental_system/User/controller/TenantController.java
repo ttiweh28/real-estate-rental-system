@@ -4,7 +4,6 @@ import group3_real_estate_rental_system.Booking.Booking;
 import group3_real_estate_rental_system.Booking.BookingServiceImpl;
 import group3_real_estate_rental_system.Lease.Lease;
 import group3_real_estate_rental_system.User.entity.Tenant;
-import group3_real_estate_rental_system.User.service.TenantService;
 import group3_real_estate_rental_system.User.service.impl.TenantServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,8 +44,8 @@ public class TenantController {
         return new ResponseEntity<>(tenantBookings, HttpStatus.OK);
     }
     @PutMapping("/{tenantId}/sign-lease/{leaseId}")
-    public ResponseEntity<Lease> signLease(@PathVariable Long tenantId, @PathVariable Long leaseId) {
-        Lease updatedLease = tenantServiceImpl.signLease(tenantId, leaseId);
+    public ResponseEntity<Lease> signLease(@PathVariable Long tenantId, @PathVariable Long leaseId, @RequestParam Boolean signed) {
+        Lease updatedLease = tenantServiceImpl.signLease(tenantId, leaseId,signed);
         return ResponseEntity.ok(updatedLease);
     }
 }

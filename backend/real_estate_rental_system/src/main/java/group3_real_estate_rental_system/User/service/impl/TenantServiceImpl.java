@@ -38,7 +38,7 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     @Transactional
-    public Lease signLease(Long tenantId, Long leaseId) {
+    public Lease signLease(Long tenantId, Long leaseId,Boolean signed) {
 
         Tenant tenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new IllegalArgumentException("Tenant not found"));
@@ -47,20 +47,22 @@ public class TenantServiceImpl implements TenantService {
         Lease lease = leaseRepository.findById(leaseId)
                 .orElseThrow(() -> new IllegalArgumentException("Lease not found"));
 
-        if (lease.getTenantSignedDate() != null) {
-            throw new IllegalStateException("Lease has already been signed by the tenant.");
-        }
-
         if (lease.getTenant() == null) {
             lease.setTenant(tenant);
         } else if (!lease.getTenant().equals(tenant)) {
             throw new IllegalStateException("This lease belongs to another tenant.");
         }
 
-
-        lease.setTenantSignedDate(LocalDateTime.now());
+        if (Boolean.TRUE.equals(signed)) {
+            lease.setSigned(true);
+            lease.setTenantSignedDate(LocalDateTime.now());
+        } else {
+            lease.setSigned(false);
+            lease.setTenantSignedDate(null);
+        }
 
         return leaseRepository.save(lease);
+
     }
 
 }

@@ -25,6 +25,7 @@ public class Lease {
     private LocalDateTime propertyOwnerSignedDate;
     private LocalDateTime expiryDate;
     private LeaseStatus leaseStatus;
+    private Boolean signed;
 
     @ManyToOne
     @JoinColumn(name = "property_id", nullable = false)

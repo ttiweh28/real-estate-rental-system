@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
               className="flex items-center space-x-3 text-blue-600 transition-transform hover:scale-105"
             >
               <Home className="h-8 w-8" />
-              <span className="font-bold text-2xl tracking-tight">LuxuryEstate</span>
+              <span className="font-bold text-2xl tracking-tight">RealEstate</span>
             </Link>
 
             {/* Desktop Navigation */}

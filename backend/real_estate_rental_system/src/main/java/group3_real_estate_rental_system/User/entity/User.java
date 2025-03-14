@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,10 @@ public abstract class User {
 
     @Embedded
     private Address address;
+
+    public Long getUserId() {
+        return userId;
+    }
 
     public String getFirstName() {
         return firstName;

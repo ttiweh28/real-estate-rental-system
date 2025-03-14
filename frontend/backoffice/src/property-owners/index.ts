@@ -1,8 +1,9 @@
-import { ListGuesser, ResourceProps, ShowGuesser } from "react-admin";
+import { ResourceProps } from "react-admin";
 import { Person2 } from "@mui/icons-material";
 import { CreatePropertyOwner } from "./create";
 import { EditPropertyOwner } from "./edit";
 import { ListPropertyOwners } from "./list";
+import { ShowPropertyOwner } from "./show";
 
 export const productOwners: ResourceProps = {
     name: "propertyOwners",
@@ -11,5 +12,5 @@ export const productOwners: ResourceProps = {
     list: ListPropertyOwners,
     edit: EditPropertyOwner,
     create: CreatePropertyOwner,
-    show: ShowGuesser,
+    show: ShowPropertyOwner,
   };

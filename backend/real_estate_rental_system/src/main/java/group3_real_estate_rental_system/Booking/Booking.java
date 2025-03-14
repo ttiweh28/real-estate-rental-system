@@ -1,5 +1,6 @@
 package group3_real_estate_rental_system.Booking;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
 import group3_real_estate_rental_system.User.entity.Tenant;
 import jakarta.persistence.*;
@@ -7,11 +8,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @Entity
 public class Booking {
@@ -21,6 +21,7 @@ public class Booking {
 
     private LocalDateTime bookingDate;
 
+    @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
     @ManyToOne
@@ -28,10 +29,17 @@ public class Booking {
     private PropertyOwner approvedBy;
 
     @ManyToOne
-    @JoinColumn(name = "tenant_id", nullable = false)
+    @JsonBackReference
     private Tenant tenant;
 
-
-
-
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "bookingId=" + bookingId +
+                ", bookingDate=" + bookingDate +
+                ", bookingStatus=" + bookingStatus +
+                ", approvedBy=" + approvedBy +
+                //", tenant=" + tenant.getUserId() +
+                '}';
+    }
 }

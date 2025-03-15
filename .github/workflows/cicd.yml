@@ -54,10 +54,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Extract Git Commit SHA
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
       - name: Build and Push Docker Image to Docker Hub
         run: |
           cd ./backend/real_estate_rental_system/

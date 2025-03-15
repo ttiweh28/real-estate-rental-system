@@ -4,8 +4,10 @@ import group3_real_estate_rental_system.Booking.Booking;
 import group3_real_estate_rental_system.Booking.BookingRepository;
 import group3_real_estate_rental_system.Booking.BookingServiceImpl;
 import group3_real_estate_rental_system.Booking.BookingStatus;
+import group3_real_estate_rental_system.User.entity.Admin;
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
 import group3_real_estate_rental_system.User.entity.Tenant;
+import group3_real_estate_rental_system.User.repository.AdminRepository;
 import group3_real_estate_rental_system.User.repository.PropertyOwnerRepository;
 import group3_real_estate_rental_system.User.repository.TenantRepository;
 import group3_real_estate_rental_system.common.Address;
@@ -17,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
@@ -32,6 +35,9 @@ public class RealEstateRentalSystemApplication implements CommandLineRunner {
 
 	@Autowired
 	BookingServiceImpl bookingServiceImpl;
+
+	@Autowired
+	AdminRepository adminRepository;
 
 
 
@@ -84,8 +90,9 @@ public class RealEstateRentalSystemApplication implements CommandLineRunner {
 		bookingRepository.save(booking2);
 		bookingRepository.save(booking3);
 
-		tenant1.setBookings(List.of(booking1));
-		tenant2.setBookings(List.of(booking2, booking3));
+		tenant1.addBooking(booking1);
+		tenant2.addBooking(booking2);
+		tenant2.addBooking(booking3);
 //		tenantRepository.save(tenant1);
 		System.out.println("Dummy Bookings Created");
 
@@ -93,6 +100,27 @@ public class RealEstateRentalSystemApplication implements CommandLineRunner {
 		List<Booking> bookings = bookingServiceImpl.getBookingByTenantId(tenant1.getUserId());
 		System.out.println(bookings);
 		bookings.stream().forEach(System.out::println);
+
+
+			Address address1 = new Address("123 Main St", "New York", "NY", "10001", "USA");
+			Address address2 = new Address("456 Elm St", "Los Angeles", "CA", "90001", "USA");
+			Address address3 = new Address("789 Oak St", "Chicago", "IL", "60601", "USA");
+			Address address4 = new Address("321 Maple St", "Washington", "DC", "20001", "USA");
+			Address address5 = new Address("654 Pine St", "Boston", "MA", "02101", "USA");
+
+			Admin admin1 = new Admin("Alice", "Johnson", "alice_admin", "securepass123", address1);
+			Admin admin2 = new Admin("Bob", "Smith", "bob_admin", "admin@123", address2);
+			Admin admin3 = new Admin("Charlie", "Brown", "charlie_admin", "password456", address3);
+			Admin admin4 = new Admin("Diana", "Prince", "diana_admin", "wonderwoman", address4);
+			Admin admin5 = new Admin("Ethan", "Hunt", "ethan_admin", "mi6topsecret", address5);
+
+			adminRepository.saveAll(Arrays.asList(admin1, admin2, admin3, admin4, admin5));
+
+			System.out.println("Dummy Admin data inserted successfully!");
+
+
+
+
 	}
 
 //	@Bean

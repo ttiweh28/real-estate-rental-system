@@ -3,7 +3,6 @@ package group3_real_estate_rental_system.User.service;
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PropertyOwnerService {
 

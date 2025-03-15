@@ -62,7 +62,7 @@ jobs:
         run: |
           cd ./backend/real_estate_rental_system/
           
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:${{ env.NEW_VERSION }} .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:${{ env.NEW_VERSION }}
           docker push ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:${{ env.NEW_VERSION }}
 
       - name: Tag the New Version

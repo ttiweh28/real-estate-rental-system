@@ -26,9 +26,9 @@ public class TenantServiceImpl implements TenantService {
     public Tenant getTenantById(Long id) {
         Tenant tenant = tenantRepository.findById(id).orElse(null);
         if (tenant == null) {
-            throw new ResourceNotFoundException("Tenant with ID " +id+" not found");
+            throw new ResourceNotFoundException("Tenant with ID " + id + " not found");
         }
-        return tenant ;
+        return tenant;
     }
 
     @Override
@@ -38,14 +38,14 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     @Transactional
-    public Lease signLease(Long tenantId, Long leaseId,Boolean signed) {
+    public Lease signLease(Long tenantId, Long leaseId, Boolean signed) {
 
         Tenant tenant = tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tenant with ID " +tenantId+" not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant with ID " + tenantId + " not found"));
 
 
         Lease lease = leaseRepository.findById(leaseId)
-                .orElseThrow(() -> new ResourceNotFoundException("Lease with ID " +leaseId+"not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Lease with ID " + leaseId + "not found"));
 
         if (lease.getTenant() == null) {
             lease.setTenant(tenant);

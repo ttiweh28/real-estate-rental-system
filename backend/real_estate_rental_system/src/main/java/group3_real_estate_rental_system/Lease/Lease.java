@@ -4,7 +4,9 @@ import group3_real_estate_rental_system.Property.Property;
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
 import group3_real_estate_rental_system.User.entity.Tenant;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +16,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 public class Lease {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long LeaseId;
 
     private String leaseURL;

@@ -1,11 +1,14 @@
 package group3_real_estate_rental_system.User.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import group3_real_estate_rental_system.Booking.Booking;
+import group3_real_estate_rental_system.Booking.entity.Booking;
 import group3_real_estate_rental_system.Lease.Lease;
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +24,14 @@ public class Tenant extends User {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<Booking> bookings= new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
     public List<Lease> getLeases() {
         return leases;
+    }
+
+    public void setLeases(List<Lease> leases) {
+        this.leases = leases;
     }
 
     public void addLease(Lease lease) {
@@ -35,17 +42,13 @@ public class Tenant extends User {
         return bookings;
     }
 
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     public void addBooking(Booking booking) {
 
         this.bookings.add(booking);
-    }
-
-    public void setLeases(List<Lease> leases) {
-        this.leases = leases;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
     }
 
     @Override

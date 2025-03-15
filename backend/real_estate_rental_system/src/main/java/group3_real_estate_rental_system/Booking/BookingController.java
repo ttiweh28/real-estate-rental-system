@@ -1,31 +1,52 @@
 package group3_real_estate_rental_system.Booking;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import group3_real_estate_rental_system.Booking.dto.BookingDTO;
+import group3_real_estate_rental_system.Booking.dto.BookingRequest;
+import group3_real_estate_rental_system.Booking.dto.BookingResponse;
+import group3_real_estate_rental_system.Booking.entity.Booking;
+import group3_real_estate_rental_system.common.BaseResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping("/booking")
 public class BookingController {
 
-    private BookingServiceImpl bookingServiceImpl;
+    private final BookingService bookingService;
+
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @GetMapping
-    public ResponseEntity<List<Booking>> getAllBookings(){
-        List<Booking> bookings = bookingServiceImpl.getAllBookings();
-        return ResponseEntity.ok(bookings);
+    public ResponseEntity<BookingResponse> getAllBookings() {
+        List<BookingDTO> allBookings = bookingService.getBookings();
+        BookingResponse bookingResponse = BaseResponse.successResponse(BookingResponse.class);
+        bookingResponse.setBooking(allBookings);
+
+        return ResponseEntity.ok(bookingResponse);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable Long id){
-        Booking booking = bookingServiceImpl.getBookingById(id);
-        return ResponseEntity.ok(booking);
+    public ResponseEntity<BookingResponse> getBookingById(@PathVariable Long id) {
+        Booking booking = bookingService.getBookingById(id);
+        return ResponseEntity.ok(BaseResponse.successResponse(BookingResponse.class));
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> addBooking(@RequestBody BookingRequest bookingRequest) {
+        bookingService.addBooking(bookingRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBooking(@PathVariable Long id){
-        bookingServiceImpl.deleteBooking(id);
+    public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
         return ResponseEntity.ok("Booking deleted");
     }
 
@@ -33,8 +54,15 @@ public class BookingController {
     public ResponseEntity<String> approveBooking(
             @PathVariable Long bookingId,
             @PathVariable Long propertyOwnerId) {
-        bookingServiceImpl.approveBooking(bookingId, propertyOwnerId);
+        bookingService.approveBooking(bookingId, propertyOwnerId);
         return ResponseEntity.ok("Booking approved successfully.");
     }
 
+    @GetMapping("/bookingStatuses")
+    public ResponseEntity<List<String>>  getAllBookingStatus() {
+        List<String> bookingStatuses = Arrays.stream(BookingStatus.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(bookingStatuses);
+    }
 }

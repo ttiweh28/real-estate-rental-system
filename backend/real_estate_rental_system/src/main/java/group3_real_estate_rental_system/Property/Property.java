@@ -10,9 +10,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
 @EqualsAndHashCode
 @Entity
 public class Property {
@@ -41,5 +38,77 @@ public class Property {
     @JoinColumn(name = "owner_id", nullable = false)
     private PropertyOwner owner;
 
+    public Long getPropertyId() {
+        return propertyId;
+    }
 
+    public String getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
+
+    public String getPropertyDescription() {
+        return propertyDescription;
+    }
+
+    public void setPropertyDescription(String propertyDescription) {
+        this.propertyDescription = propertyDescription;
+    }
+
+    public List<String> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(List<String> amenities) {
+        this.amenities = amenities;
+    }
+
+    public PropertyStatus getAvailabilityStatus() {
+        return availabilityStatus;
+    }
+
+    public void setAvailabilityStatus(PropertyStatus availabilityStatus) {
+        this.availabilityStatus = availabilityStatus;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Lease> getLeases() {
+        return leases;
+    }
+
+    public void setLeases(List<Lease> leases) {
+        this.leases = leases;
+    }
+
+    public PropertyOwner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(PropertyOwner owner) {
+        this.owner = owner;
+    }
+
+    @Override
+    public String toString() {
+        return "Property{" +
+                "propertyId=" + propertyId +
+                ", propertyType='" + propertyType + '\'' +
+                ", propertyDescription='" + propertyDescription + '\'' +
+                ", amenities=" + amenities +
+                ", availabilityStatus=" + availabilityStatus +
+                ", address=" + address +
+                ", leases=" + leases +
+                ", owner=" + owner +
+                '}';
+    }
 }

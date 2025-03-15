@@ -14,8 +14,6 @@ import java.util.List;
 @EqualsAndHashCode
 public class PropertyOwner extends User {
 
-
-
     @OneToMany(mappedBy = "propertyOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lease> leases;
 
@@ -48,4 +46,5 @@ public class PropertyOwner extends User {
     public void setBookings(Booking booking) {
         this.Bookings.add(booking);
     }
+
 }

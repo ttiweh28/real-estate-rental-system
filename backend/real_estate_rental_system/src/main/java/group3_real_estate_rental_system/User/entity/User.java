@@ -7,9 +7,7 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
-
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
@@ -69,4 +67,15 @@ public abstract class User {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", address=" + address +
+                '}';
+    }
 }

@@ -29,4 +29,12 @@ public class BookingController {
         return ResponseEntity.ok("Booking deleted");
     }
 
+    @PutMapping("/{bookingId}/approvebooking/{propertyOwnerId}")
+    public ResponseEntity<String> approveBooking(
+            @PathVariable Long bookingId,
+            @PathVariable Long propertyOwnerId) {
+        bookingServiceImpl.approveBooking(bookingId, propertyOwnerId);
+        return ResponseEntity.ok("Booking approved successfully.");
+    }
+
 }

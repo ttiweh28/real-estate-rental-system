@@ -4,7 +4,9 @@ import group3_real_estate_rental_system.Lease.Lease;
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
 import group3_real_estate_rental_system.common.Address;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -14,7 +16,8 @@ import java.util.List;
 @Entity
 public class Property {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long propertyId;
 
     private String propertyType;
@@ -31,7 +34,7 @@ public class Property {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lease> leases;
 
     @ManyToOne

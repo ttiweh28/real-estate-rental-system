@@ -1,11 +1,13 @@
 package group3_real_estate_rental_system.User.entity;
 
-import group3_real_estate_rental_system.Booking.Booking;
+import group3_real_estate_rental_system.Booking.entity.Booking;
 import group3_real_estate_rental_system.Lease.Lease;
 import group3_real_estate_rental_system.Property.Property;
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 

@@ -2,7 +2,8 @@ package group3_real_estate_rental_system.User.entity;
 
 import group3_real_estate_rental_system.common.Address;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @ToString
@@ -10,7 +11,8 @@ import lombok.*;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
 

@@ -1,11 +1,9 @@
 package group3_real_estate_rental_system.User.entity;
 
-import group3_real_estate_rental_system.Lease.Lease;
 import group3_real_estate_rental_system.common.Address;
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.List;
+import jakarta.persistence.Entity;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 
@@ -17,11 +15,9 @@ public class Admin extends User {
         super(firstName, lastName, userName, password, address);  // Calls User constructor
     }
 
-    public Admin(){
+    public Admin() {
 
     }
-
-
 
 
 }

@@ -1,44 +1,72 @@
 package group3_real_estate_rental_system.Booking;
 
+import group3_real_estate_rental_system.Booking.dto.BookingDTO;
+import group3_real_estate_rental_system.Booking.dto.BookingRequest;
+import group3_real_estate_rental_system.Booking.entity.Booking;
+import group3_real_estate_rental_system.Property.Property;
+import group3_real_estate_rental_system.Property.PropertyService;
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
 import group3_real_estate_rental_system.User.entity.Tenant;
-import group3_real_estate_rental_system.User.repository.PropertyOwnerRepository;
-import group3_real_estate_rental_system.User.repository.TenantRepository;
+import group3_real_estate_rental_system.User.service.PropertyOwnerService;
+import group3_real_estate_rental_system.User.service.TenantService;
 import group3_real_estate_rental_system.exception.ResourceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class BookingServiceImpl implements BookingService {
 
-    private BookingRepository bookingRepository;
-    private TenantRepository tenantRepository;
-    private PropertyOwnerRepository propertyOwnerRepository;
+    private final BookingRepository bookingRepository;
+    private final TenantService tenantService;
+    private final PropertyOwnerService propertyOwnerService;
+    private final PropertyService propertyService;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, TenantRepository tenantRepository, PropertyOwnerRepository propertyOwnerRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, TenantService tenantService, PropertyOwnerService propertyOwnerService, PropertyService propertyService) {
         this.bookingRepository = bookingRepository;
-        this.tenantRepository = tenantRepository;
-        this.propertyOwnerRepository = propertyOwnerRepository;
+        this.tenantService = tenantService;
+        this.propertyOwnerService = propertyOwnerService;
+        this.propertyService = propertyService;
+    }
+
+    private static List<BookingDTO> buildBookingTester(List<Booking> bookings) {
+        return bookings.stream()
+                .map(booking -> new BookingDTO(booking.getId(),
+                        booking.getBookingDate(),
+                        booking.getBookingStatus(),
+                        booking.getApprovedBy(),
+                        booking.getTenant(),
+                        booking.getProperty()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void addBooking(Long tenantId, Booking booking) {
-        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(()-> new ResourceNotFoundException("Tenant not found"));
+    public void addBooking(BookingRequest bookingRequest) {
+        Tenant tenant = tenantService.getTenantById(bookingRequest.getTenantId());
+        if (tenant == null) {
+            throw new ResourceNotFoundException("Tenant not found");
+        }
+        Property property = propertyService.getProperty(bookingRequest.getPropertyId());
+        if (property == null) {
+            throw new ResourceNotFoundException("Property not found");
+        }
+
+        Booking booking = new Booking();
         booking.setTenant(tenant);
-        booking.setBookingDate(LocalDateTime.now());
+        booking.setBookingDate(bookingRequest.getBookingDate());
         booking.setBookingStatus(BookingStatus.PENDING);
+        booking.setProperty(property);
         bookingRepository.save(booking);
     }
 
+
+    //TODO fix it for admin tenant and propertyOwner
     @Override
-    public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
+    public List<BookingDTO> getBookings() {
+        List<Booking> bookings = bookingRepository.findAll();
+
+        return buildBookingTester(bookings);
     }
 
     @Override
@@ -46,7 +74,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(id).orElse(null);
         if (booking != null) {
             return booking;
-        }else {
+        } else {
             throw new ResourceNotFoundException("Booking with id " + id + " not found");
         }
     }
@@ -56,28 +84,31 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(id).orElse(null);
         if (booking != null) {
             bookingRepository.delete(booking);
-        }else{
+        } else {
             throw new ResourceNotFoundException("Booking with id " + id + " not found");
         }
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.REQUIRED)
-    public List<Booking> getBookingByTenantId(Long tenantId) {
-        Tenant tenant = tenantRepository.findById(tenantId).orElse(null);
-        if (tenant != null) {
-            return tenant.getBookings();
-        }else {
+    public List<BookingDTO> getBookingByTenantId(Long tenantId) {
+        Tenant tenant = tenantService.getTenantById(tenantId);
+        if (tenant == null) {
             throw new ResourceNotFoundException("Tenant with id " + tenantId + " not found");
         }
+        List<Booking> bookingByTenant = bookingRepository.getBookingByTenant(tenant);
+
+        return buildBookingTester(bookingByTenant);
     }
 
     @Override
     public void approveBooking(Long bookingId, Long propertyOwnerId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found with id " + bookingId));
-        PropertyOwner propertyOwner = propertyOwnerRepository.findById(propertyOwnerId)
-                .orElseThrow(() -> new ResourceNotFoundException("PropertyOwner not found with id " + propertyOwnerId));
+        PropertyOwner propertyOwner = propertyOwnerService.getPropertyOwnerById(propertyOwnerId);
+
+        if (propertyOwner == null) {
+            throw new ResourceNotFoundException("Property owner not found with id " + propertyOwnerId);
+        }
 
         booking.setApprovedBy(propertyOwner);
         booking.setBookingStatus(BookingStatus.APPROVED);

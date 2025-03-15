@@ -1,19 +1,17 @@
-package group3_real_estate_rental_system.Booking;
+package group3_real_estate_rental_system.Booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import group3_real_estate_rental_system.Booking.BookingStatus;
 import group3_real_estate_rental_system.Property.Property;
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
 import group3_real_estate_rental_system.User.entity.Tenant;
+import group3_real_estate_rental_system.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Booking {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
+public class Booking extends BaseEntity {
 
     private LocalDateTime bookingDate;
 
@@ -21,7 +19,7 @@ public class Booking {
     private BookingStatus bookingStatus;
 
     @ManyToOne
-    @JoinColumn(name = "approved_by_propertyowner_id")
+    @JoinColumn(name = "approved_by_propertyOwner_id")
     private PropertyOwner approvedBy;
 
     @ManyToOne
@@ -30,10 +28,6 @@ public class Booking {
 
     @OneToOne
     private Property property;
-
-    public Long getBookingId() {
-        return bookingId;
-    }
 
     public LocalDateTime getBookingDate() {
         return bookingDate;
@@ -78,7 +72,7 @@ public class Booking {
     @Override
     public String toString() {
         return "Booking{" +
-                "bookingId=" + bookingId +
+                "bookingId=" + getId() +
                 ", bookingDate=" + bookingDate +
                 ", bookingStatus=" + bookingStatus +
                 ", approvedBy=" + approvedBy +

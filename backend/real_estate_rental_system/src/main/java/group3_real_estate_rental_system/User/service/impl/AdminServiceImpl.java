@@ -1,7 +1,6 @@
 package group3_real_estate_rental_system.User.service.impl;
 
 import group3_real_estate_rental_system.User.entity.Admin;
-import group3_real_estate_rental_system.User.entity.PropertyOwner;
 import group3_real_estate_rental_system.User.repository.AdminRepository;
 import group3_real_estate_rental_system.User.service.AdminService;
 import group3_real_estate_rental_system.exception.ResourceNotFoundException;
@@ -21,42 +20,40 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public Admin saveAdmin (Admin admin){
+    public Admin saveAdmin(Admin admin) {
         return adminRepository.save(admin);
 
     }
 
     @Override
-    public List<Admin> getAllAdmins(){
+    public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
     }
 
 
-
     @Override
-    public Admin getAdminById(Long id){
+    public Admin getAdminById(Long id) {
 
         Optional<Admin> admin = adminRepository.findById(id);
 
-        if (admin.isPresent()){
+        if (admin.isPresent()) {
             return admin.get();
-        }
-        else{
+        } else {
             throw new ResourceNotFoundException("PropertyOwner not found");
         }
     }
 
     @Override
-    public List<Admin> getAdminByFirstName(String firstName){
+    public List<Admin> getAdminByFirstName(String firstName) {
         return adminRepository.findByFirstName(firstName);
     }
 
     @Override
-    public Admin updateAdmin(Long id, Admin adminDetails){
+    public Admin updateAdmin(Long id, Admin adminDetails) {
 
         Optional<Admin> adminOptional = adminRepository.findById(id);
 
-        if (adminOptional.isPresent()){
+        if (adminOptional.isPresent()) {
             Admin admin = adminOptional.get();
 
             admin.setFirstName(adminDetails.getFirstName());
@@ -67,22 +64,20 @@ public class AdminServiceImpl implements AdminService {
 
 
             return adminRepository.save(admin);
-        }
-        else{
+        } else {
             throw new ResourceNotFoundException("Property Owner not found with ID: " + id);
 
         }
     }
 
     @Override
-    public void deleteAdmin(Long id){
+    public void deleteAdmin(Long id) {
 
         Optional<Admin> optionalAdmin = adminRepository.findById(id);
 
-        if(optionalAdmin.isPresent()){
+        if (optionalAdmin.isPresent()) {
             adminRepository.deleteById(id);
-        }
-        else{
+        } else {
             throw new ResourceNotFoundException("Property Owner not found with ID: " + id);
         }
     }

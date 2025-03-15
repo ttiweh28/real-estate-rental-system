@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/admin")
 public class AdminController {
-    
+
 
     @Autowired
     private AdminServiceImpl adminService;
@@ -56,7 +56,6 @@ public class AdminController {
         adminService.deleteAdmin(id);
         return ResponseEntity.noContent().build();
     }
-
 
 
 }

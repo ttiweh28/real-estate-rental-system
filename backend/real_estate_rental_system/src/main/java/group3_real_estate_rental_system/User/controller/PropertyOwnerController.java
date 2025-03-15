@@ -2,7 +2,6 @@ package group3_real_estate_rental_system.User.controller;
 
 
 import group3_real_estate_rental_system.User.entity.PropertyOwner;
-import group3_real_estate_rental_system.User.service.PropertyOwnerService;
 import group3_real_estate_rental_system.User.service.impl.PropertyOwnerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,7 +56,6 @@ public class PropertyOwnerController {
         propertyOwnerServiceImpl.deletePropertyOwner(id);
         return ResponseEntity.noContent().build();
     }
-
 
 
 }

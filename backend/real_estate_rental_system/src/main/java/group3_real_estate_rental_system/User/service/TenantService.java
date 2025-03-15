@@ -3,14 +3,15 @@ package group3_real_estate_rental_system.User.service;
 import group3_real_estate_rental_system.Lease.Lease;
 import group3_real_estate_rental_system.User.entity.Tenant;
 
-
 import java.util.List;
 
 
 public interface TenantService {
 
     Tenant getTenantById(Long id);
+
     List<Tenant> getAllTenants();
+
     Lease signLease(Long tenantId, Long leaseId, Boolean signed);
 
 }

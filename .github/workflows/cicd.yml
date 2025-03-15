@@ -41,6 +41,8 @@ jobs:
         run: |
           VERSION=$(cat VERSION)
           NEW_VERSION=$(echo $VERSION | awk -F. '{$NF+=1; OFS="."; print $0}')
+          echo "New version: $NEW_VERSION"
+          echo $NEW_VERSION > VERSION
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
@@ -56,19 +58,12 @@ jobs:
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-      - name: Build and Tag Docker Image
+      - name: Build and Push Docker Image to Docker Hub
         run: |
           cd ./backend/real_estate_rental_system/
           
-          VERSION=$(git describe --tags --abbrev=0)
-
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:$VERSION .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:$VERSION ${{ secrets.DOCKER_USERNAME }}/springboot-app:${{ env.sha_short }}
-
-      - name: Push Docker Image to Docker Hub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:$VERSION
-          docker push ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:${{ env.sha_short }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:${{ env.NEW_VERSION }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/real-estate-rental-system:${{ env.NEW_VERSION }}
 
       - name: Tag the New Version
         run: |

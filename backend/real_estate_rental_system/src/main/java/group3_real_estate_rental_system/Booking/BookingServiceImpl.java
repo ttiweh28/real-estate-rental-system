@@ -17,12 +17,15 @@ import java.util.List;
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
-    @Autowired
     private BookingRepository bookingRepository;
-    @Autowired
     private TenantRepository tenantRepository;
-    @Autowired
     private PropertyOwnerRepository propertyOwnerRepository;
+
+    public BookingServiceImpl(BookingRepository bookingRepository, TenantRepository tenantRepository, PropertyOwnerRepository propertyOwnerRepository) {
+        this.bookingRepository = bookingRepository;
+        this.tenantRepository = tenantRepository;
+        this.propertyOwnerRepository = propertyOwnerRepository;
+    }
 
     @Override
     public void addBooking(Long tenantId, Booking booking) {

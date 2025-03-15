@@ -41,11 +41,11 @@ public class TenantServiceImpl implements TenantService {
     public Lease signLease(Long tenantId, Long leaseId,Boolean signed) {
 
         Tenant tenant = tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new IllegalArgumentException("Tenant not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant with ID " +tenantId+" not found"));
 
 
         Lease lease = leaseRepository.findById(leaseId)
-                .orElseThrow(() -> new IllegalArgumentException("Lease not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Lease with ID " +leaseId+"not found"));
 
         if (lease.getTenant() == null) {
             lease.setTenant(tenant);

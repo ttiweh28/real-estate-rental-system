@@ -24,26 +24,32 @@ public class PropertyOwner extends User {
     private List<Booking> Bookings;
 
     public List<Lease> getLeases() {
+
         return leases;
     }
 
     public void addLeases(Lease lease) {
+
         this.leases.add(lease);
     }
 
     public List<Property> getProperties() {
+
         return properties;
     }
 
     public void addProperties(Property property) {
+
         this.properties.add(property);
     }
 
     public List<Booking> getBookings() {
+
         return Bookings;
     }
 
-    public void setBookings(Booking booking) {
+    public void addBookings(Booking booking) {
+
         this.Bookings.add(booking);
     }
 

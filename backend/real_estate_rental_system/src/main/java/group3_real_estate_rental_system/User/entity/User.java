@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@ToString
 @EqualsAndHashCode
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,6 +21,19 @@ public abstract class User {
 
     @Embedded
     private Address address;
+
+
+    public User(String firstName, String lastName, String userName, String password, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
+        this.address = address;
+    }
+
+    public User() {
+
+    }
 
     public Long getUserId() {
         return userId;

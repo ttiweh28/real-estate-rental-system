@@ -54,6 +54,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService {
             propertyOwner.setLastName(propertyOwnerDetails.getLastName());
             propertyOwner.setUserName(propertyOwnerDetails.getUserName());
             propertyOwner.setPassword(propertyOwnerDetails.getPassword());
+            propertyOwner.setAddress(propertyOwnerDetails.getAddress());
 
             return propertyOwnerRepository.save(propertyOwner);
         }

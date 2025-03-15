@@ -10,7 +10,6 @@ import java.util.List;
 @RequestMapping("/api/bookings")
 public class BookingController {
 
-    @Autowired
     private BookingServiceImpl bookingServiceImpl;
 
     @GetMapping

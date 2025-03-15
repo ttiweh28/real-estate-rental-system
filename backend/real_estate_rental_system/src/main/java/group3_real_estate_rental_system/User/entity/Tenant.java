@@ -40,6 +40,13 @@ public class Tenant extends User {
         this.bookings.add(booking);
     }
 
+    public void setLeases(List<Lease> leases) {
+        this.leases = leases;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
     @Override
     public String toString() {

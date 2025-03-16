@@ -1,24 +1,23 @@
-package group3_real_estate_rental_system.Property;
+package group3_real_estate_rental_system.Property.entity;
 
 import group3_real_estate_rental_system.Lease.Lease;
-import group3_real_estate_rental_system.User.entity.PropertyOwner;
+import group3_real_estate_rental_system.Property.PropertyStatus;
+import group3_real_estate_rental_system.User.entity.User;
 import group3_real_estate_rental_system.common.Address;
+import group3_real_estate_rental_system.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-public class Property {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long propertyId;
+public class Property extends BaseEntity {
 
     private String propertyType;
 
@@ -31,19 +30,20 @@ public class Property {
 
     private PropertyStatus availabilityStatus;
 
+    @ElementCollection
+    @CollectionTable(name = "property_amenities", joinColumns = @JoinColumn(name = "property_id"))
+    @Column(name = "amenity")
+    private List<String> propertyPhotos;
+
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Lease> leases;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
-    private PropertyOwner owner;
-
-    public Long getPropertyId() {
-        return propertyId;
-    }
+    private User owner;
 
     public String getPropertyType() {
         return propertyType;
@@ -93,18 +93,26 @@ public class Property {
         this.leases = leases;
     }
 
-    public PropertyOwner getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(PropertyOwner owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public List<String> getPropertyPhotos() {
+        return propertyPhotos;
+    }
+
+    public void setPropertyPhotos(List<String> propertyPhotos) {
+        this.propertyPhotos = propertyPhotos;
     }
 
     @Override
     public String toString() {
         return "Property{" +
-                "propertyId=" + propertyId +
+                "propertyId=" + getId() +
                 ", propertyType='" + propertyType + '\'' +
                 ", propertyDescription='" + propertyDescription + '\'' +
                 ", amenities=" + amenities +

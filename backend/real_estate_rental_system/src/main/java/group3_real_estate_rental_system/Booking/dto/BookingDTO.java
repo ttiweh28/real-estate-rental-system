@@ -1,27 +1,26 @@
 package group3_real_estate_rental_system.Booking.dto;
 
 import group3_real_estate_rental_system.Booking.BookingStatus;
-import group3_real_estate_rental_system.Property.Property;
-import group3_real_estate_rental_system.User.entity.PropertyOwner;
-import group3_real_estate_rental_system.User.entity.Tenant;
+import group3_real_estate_rental_system.Property.dto.PropertyDTO;
+import group3_real_estate_rental_system.User.dto.UserBasicInfo;
 
 import java.time.LocalDateTime;
 
 public class BookingDTO {
 
-    private final Long bookingId;
+    private Long bookingId;
 
-    private final LocalDateTime bookingDate;
+    private LocalDateTime bookingDate;
 
-    private final BookingStatus bookingStatus;
+    private BookingStatus bookingStatus;
 
-    private final PropertyOwner approvedBy;
+    private UserBasicInfo approvedBy;
 
-    private final Tenant tenant;
+    private UserBasicInfo tenant;
 
-    private final Property property;
+    private PropertyDTO property;
 
-    public BookingDTO(Long bookingId, LocalDateTime bookingDate, BookingStatus bookingStatus, PropertyOwner approvedBy, Tenant tenant, Property property) {
+    public BookingDTO(Long bookingId, LocalDateTime bookingDate, BookingStatus bookingStatus, UserBasicInfo approvedBy, UserBasicInfo tenant, PropertyDTO property) {
         this.bookingId = bookingId;
         this.bookingDate = bookingDate;
         this.bookingStatus = bookingStatus;
@@ -30,27 +29,55 @@ public class BookingDTO {
         this.property = property;
     }
 
+    public BookingDTO() {
+    }
+
     public Long getBookingId() {
         return bookingId;
+    }
+
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
     }
 
     public LocalDateTime getBookingDate() {
         return bookingDate;
     }
 
+    public void setBookingDate(LocalDateTime bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
     public BookingStatus getBookingStatus() {
         return bookingStatus;
     }
 
-    public PropertyOwner getApprovedBy() {
+    public void setBookingStatus(BookingStatus bookingStatus) {
+        this.bookingStatus = bookingStatus;
+    }
+
+    public UserBasicInfo getApprovedBy() {
         return approvedBy;
     }
 
-    public Tenant getTenant() {
+    public void setApprovedBy(UserBasicInfo approvedBy) {
+        this.approvedBy = approvedBy;
+    }
+
+    public UserBasicInfo getTenant() {
         return tenant;
     }
 
-    public Property getProperty() {
+    public void setTenant(UserBasicInfo tenant) {
+        this.tenant = tenant;
+    }
+
+    public PropertyDTO getProperty() {
         return property;
     }
+
+    public void setProperty(PropertyDTO property) {
+        this.property = property;
+    }
+
 }

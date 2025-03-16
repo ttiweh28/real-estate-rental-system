@@ -1,8 +1,8 @@
 package group3_real_estate_rental_system.Lease;
 
-import group3_real_estate_rental_system.Property.Property;
-import group3_real_estate_rental_system.User.entity.PropertyOwner;
-import group3_real_estate_rental_system.User.entity.Tenant;
+import group3_real_estate_rental_system.Property.entity.Property;
+import group3_real_estate_rental_system.User.entity.User;
+import group3_real_estate_rental_system.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -14,11 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Lease {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long LeaseId;
+public class Lease extends BaseEntity {
 
     private String leaseURL;
     private LocalDateTime tenantSignedDate;
@@ -33,15 +29,11 @@ public class Lease {
 
     @ManyToOne
     @JoinColumn(name = "tenant_id", nullable = false)
-    private Tenant tenant;
+    private User tenant;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
-    private PropertyOwner propertyOwner;
-
-    public Long getLeaseId() {
-        return LeaseId;
-    }
+    private User propertyOwner;
 
 
     public String getLeaseURL() {
@@ -100,26 +92,26 @@ public class Lease {
         this.property = property;
     }
 
-    public Tenant getTenant() {
+    public User getTenant() {
         return tenant;
     }
 
-    public void setTenant(Tenant tenant) {
+    public void setTenant(User tenant) {
         this.tenant = tenant;
     }
 
-    public PropertyOwner getPropertyOwner() {
+    public User getPropertyOwner() {
         return propertyOwner;
     }
 
-    public void setPropertyOwner(PropertyOwner propertyOwner) {
+    public void setPropertyOwner(User propertyOwner) {
         this.propertyOwner = propertyOwner;
     }
 
     @Override
     public String toString() {
         return "Lease{" +
-                "LeaseId=" + LeaseId +
+                "LeaseId=" + getId() +
                 ", leaseURL='" + leaseURL + '\'' +
                 ", tenantSignedDate=" + tenantSignedDate +
                 ", propertyOwnerSignedDate=" + propertyOwnerSignedDate +

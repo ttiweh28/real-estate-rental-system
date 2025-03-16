@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/leases")
+@RequestMapping("/Leases")
 public class LeaseController {
 
     private final LeaseService leaseService;

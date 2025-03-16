@@ -3,7 +3,6 @@ package group3_real_estate_rental_system.Lease;
 
 import group3_real_estate_rental_system.Property.PropertyRepository;
 import group3_real_estate_rental_system.User.UserService;
-import group3_real_estate_rental_system.User.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

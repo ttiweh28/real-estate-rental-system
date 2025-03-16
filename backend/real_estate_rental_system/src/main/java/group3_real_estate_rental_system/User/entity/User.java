@@ -23,6 +23,7 @@ public class User extends BaseEntity {
     private String photo;
 
 
+
     private Role role;
 
     @Embedded

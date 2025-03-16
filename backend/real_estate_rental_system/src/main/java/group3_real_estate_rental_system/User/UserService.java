@@ -2,15 +2,35 @@ package group3_real_estate_rental_system.User;
 
 import group3_real_estate_rental_system.User.dto.UserBasicInfo;
 import group3_real_estate_rental_system.User.dto.UserDTO;
+import group3_real_estate_rental_system.User.dto.UserRequest;
 import group3_real_estate_rental_system.User.entity.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    void addUser(UserDTO user);
+    static UserDTO buildUserDtoFromUserEntity(User user) {
+        return user != null ? new UserDTO(user.getFirstName(),
+                user.getLastName(),
+                user.getUserName(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getPhoto(),
+                user.getAddress()) : null;
+    }
+
+    static UserBasicInfo buildUserBasicInfoFromUserEntity(User user) {
+        return user != null ? new UserBasicInfo(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoto()) : null;
+    }
+
+    void addUser(UserRequest user);
 
     List<UserDTO> getAllUsers();
+
+    User getUserByUsername(String username);
 
     UserDTO getUserById(Long id);
 
@@ -21,22 +41,5 @@ public interface UserService {
     User updateUser(Long id, UserDTO User);
 
     void deleteUser(Long id);
-
-    static UserDTO buildUserDtoFromUserEntity(User user){
-        return new UserDTO(user.getFirstName(),
-                user.getLastName(),
-                user.getUserName(),
-                user.getEmail(),
-                user.getPhoneNumber(),
-                user.getPhoto(),
-                user.getAddress());
-    }
-
-   static UserBasicInfo buildUserBasicInfoFromUserEntity(User user){
-       return new UserBasicInfo(
-               user.getFirstName(),
-               user.getLastName(),
-               user.getPhoto());
-   }
 }
  

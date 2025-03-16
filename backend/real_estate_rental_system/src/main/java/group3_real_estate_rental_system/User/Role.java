@@ -4,7 +4,8 @@ public enum Role {
 
     ADMIN("Administrator"),
     TENANT("Tenant"),
-    PROPERTIES_OWNER("Properties Owner"),;
+    PROPERTIES_OWNER("Properties Owner"),
+    ;
 
     private final String displayName;
 

@@ -3,7 +3,6 @@ package group3_real_estate_rental_system.Booking;
 import group3_real_estate_rental_system.Booking.dto.BookingDTO;
 import group3_real_estate_rental_system.Booking.dto.BookingRequest;
 import group3_real_estate_rental_system.Booking.dto.BookingResponse;
-import group3_real_estate_rental_system.Booking.entity.Booking;
 import group3_real_estate_rental_system.common.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/bookings")
 public class BookingController {
 
     private final BookingService bookingService;
@@ -47,9 +46,9 @@ public class BookingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
-        return ResponseEntity.ok("Booking deleted");
     }
 
 
@@ -63,7 +62,7 @@ public class BookingController {
     }
 
     @GetMapping("/bookingStatuses")
-    public ResponseEntity<List<String>>  getAllBookingStatus() {
+    public ResponseEntity<List<String>> getAllBookingStatus() {
         List<String> bookingStatuses = Arrays.stream(BookingStatus.values())
                 .map(Enum::name)
                 .collect(Collectors.toList());

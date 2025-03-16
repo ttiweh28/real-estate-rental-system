@@ -5,6 +5,11 @@ WORKDIR /app
 # Copy the Spring Boot JAR file from the target directory
 COPY target/*.jar app.jar
 
-ENV SERVER_PORT=8080
+ENV SERVER_PORT=8889
 
-ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=${SERVER_PORT}"]
+
+ENV DB_NAME=rsrs
+ENV DB_PASSWORD=root
+ENV DB_USERNAME=root
+
+ENTRYPOINT ["sh", "-c", "java -jar app.jar --spring.profiles.active=prod"]

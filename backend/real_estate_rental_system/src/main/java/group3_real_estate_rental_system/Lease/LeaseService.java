@@ -2,8 +2,8 @@ package group3_real_estate_rental_system.Lease;
 
 
 import group3_real_estate_rental_system.Property.PropertyRepository;
-import group3_real_estate_rental_system.User.repository.PropertyOwnerRepository;
-import group3_real_estate_rental_system.User.repository.TenantRepository;
+import group3_real_estate_rental_system.User.UserService;
+import group3_real_estate_rental_system.User.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,15 +12,12 @@ import java.util.Optional;
 @Service
 public class LeaseService {
     private final LeaseRepository leaseRepository;
-    private final TenantRepository tenantRepository;
-    private final PropertyOwnerRepository propertyOwnerRepository;
+    private final UserService userService;
     private final PropertyRepository propertyRepository;
 
-    public LeaseService(LeaseRepository leaseRepository, TenantRepository tenantRepository,
-                        PropertyOwnerRepository propertyOwnerRepository, PropertyRepository propertyRepository) {
+    public LeaseService(LeaseRepository leaseRepository, UserService userService, PropertyRepository propertyRepository) {
         this.leaseRepository = leaseRepository;
-        this.tenantRepository = tenantRepository;
-        this.propertyOwnerRepository = propertyOwnerRepository;
+        this.userService = userService;
         this.propertyRepository = propertyRepository;
     }
 

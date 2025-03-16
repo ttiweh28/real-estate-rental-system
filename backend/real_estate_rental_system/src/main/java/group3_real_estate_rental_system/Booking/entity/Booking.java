@@ -2,9 +2,8 @@ package group3_real_estate_rental_system.Booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import group3_real_estate_rental_system.Booking.BookingStatus;
-import group3_real_estate_rental_system.Property.Property;
-import group3_real_estate_rental_system.User.entity.PropertyOwner;
-import group3_real_estate_rental_system.User.entity.Tenant;
+import group3_real_estate_rental_system.Property.entity.Property;
+import group3_real_estate_rental_system.User.entity.User;
 import group3_real_estate_rental_system.common.BaseEntity;
 import jakarta.persistence.*;
 
@@ -20,11 +19,11 @@ public class Booking extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "approved_by_propertyOwner_id")
-    private PropertyOwner approvedBy;
+    private User approvedBy;
 
     @ManyToOne
     @JsonBackReference
-    private Tenant tenant;
+    private User tenant;
 
     @OneToOne
     private Property property;
@@ -45,19 +44,19 @@ public class Booking extends BaseEntity {
         this.bookingStatus = bookingStatus;
     }
 
-    public PropertyOwner getApprovedBy() {
+    public User getApprovedBy() {
         return approvedBy;
     }
 
-    public void setApprovedBy(PropertyOwner approvedBy) {
+    public void setApprovedBy(User approvedBy) {
         this.approvedBy = approvedBy;
     }
 
-    public Tenant getTenant() {
+    public User getTenant() {
         return tenant;
     }
 
-    public void setTenant(Tenant tenant) {
+    public void setTenant(User tenant) {
         this.tenant = tenant;
     }
 

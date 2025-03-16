@@ -34,8 +34,10 @@ public class BookingController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookingResponse> getBookingById(@PathVariable Long id) {
-        Booking booking = bookingService.getBookingById(id);
-        return ResponseEntity.ok(BaseResponse.successResponse(BookingResponse.class));
+        BookingDTO booking = bookingService.getBookingById(id);
+        BookingResponse bookingResponse = BaseResponse.successResponse(BookingResponse.class);
+        bookingResponse.setBooking(List.of(booking));
+        return ResponseEntity.ok(bookingResponse);
     }
 
     @PostMapping()
@@ -50,6 +52,8 @@ public class BookingController {
         return ResponseEntity.ok("Booking deleted");
     }
 
+
+    //TODO - check again
     @PutMapping("/{bookingId}/approvebooking/{propertyOwnerId}")
     public ResponseEntity<String> approveBooking(
             @PathVariable Long bookingId,

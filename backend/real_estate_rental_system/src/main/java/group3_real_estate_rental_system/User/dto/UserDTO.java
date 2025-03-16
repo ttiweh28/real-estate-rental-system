@@ -1,47 +1,39 @@
-package group3_real_estate_rental_system.User.entity;
+package group3_real_estate_rental_system.User.dto;
 
 import group3_real_estate_rental_system.User.Role;
 import group3_real_estate_rental_system.common.Address;
-import group3_real_estate_rental_system.common.BaseEntity;
-import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import jakarta.persistence.Embedded;
 
-@Entity
-@ToString
-@EqualsAndHashCode
-@Table(name = "users")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User extends BaseEntity {
+import java.util.List;
 
+public class UserDTO {
+    private Long userId;
     private String firstName;
     private String lastName;
     private String userName;
-    private String password;
     private String email;
     private String phoneNumber;
     private String photo;
-
-
     private Role role;
 
-    @Embedded
     private Address address;
 
-
-    public User(String firstName, String lastName, String userName, String password, String email, String phoneNumber, String photo, Address address) {
+    public UserDTO(String firstName, String lastName, String userName, String email, String phoneNumber, String photo, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
-        this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.photo = photo;
         this.address = address;
     }
 
-    public User() {
+    public Long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -68,22 +60,6 @@ public class User extends BaseEntity {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -100,12 +76,12 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public Role getRole() {
-        return role;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getPhoto() {
@@ -116,15 +92,11 @@ public class User extends BaseEntity {
         this.photo = photo;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + getId() +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", address=" + address +
-                '}';
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

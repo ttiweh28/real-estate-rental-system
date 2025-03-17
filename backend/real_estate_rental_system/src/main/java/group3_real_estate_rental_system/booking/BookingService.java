@@ -1,8 +1,8 @@
-package group3_real_estate_rental_system.Booking;
+package group3_real_estate_rental_system.booking;
 
-import group3_real_estate_rental_system.Booking.dto.BookingDTO;
-import group3_real_estate_rental_system.Booking.dto.BookingRequest;
-import group3_real_estate_rental_system.Booking.entity.Booking;
+import group3_real_estate_rental_system.booking.dto.BookingDTO;
+import group3_real_estate_rental_system.booking.dto.BookingRequest;
+import group3_real_estate_rental_system.booking.entity.Booking;
 import group3_real_estate_rental_system.Property.PropertyService;
 import group3_real_estate_rental_system.Property.entity.Property;
 import group3_real_estate_rental_system.User.UserService;

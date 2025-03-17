@@ -1,4 +1,4 @@
-package group3_real_estate_rental_system.filemanager;
+package group3_real_estate_rental_system.imageUpload;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

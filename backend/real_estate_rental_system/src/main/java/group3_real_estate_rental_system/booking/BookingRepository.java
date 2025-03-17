@@ -1,6 +1,6 @@
-package group3_real_estate_rental_system.Booking;
+package group3_real_estate_rental_system.booking;
 
-import group3_real_estate_rental_system.Booking.entity.Booking;
+import group3_real_estate_rental_system.booking.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

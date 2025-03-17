@@ -10,18 +10,16 @@ public class UserRequest extends BaseRequest {
     private String userName;
     private String email;
     private String phoneNumber;
-    private String photo;
     private Role role;
     private String password;
     private Address address;
 
-    public UserRequest( String firstName, String lastName, String userName, String email, String phoneNumber, String photo, String password, Role role, Address address) {
+    public UserRequest( String firstName, String lastName, String userName, String email, String phoneNumber, String password, Role role, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.photo = photo;
         this.password = password;
         this.role = role;
         this.address = address;
@@ -65,14 +63,6 @@ public class UserRequest extends BaseRequest {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
     public String getPassword() {

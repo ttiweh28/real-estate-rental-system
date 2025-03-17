@@ -4,9 +4,12 @@ import group3_real_estate_rental_system.User.dto.UserBasicInfo;
 import group3_real_estate_rental_system.User.dto.UserDTO;
 import group3_real_estate_rental_system.User.dto.UserRequest;
 import group3_real_estate_rental_system.User.entity.User;
+import group3_real_estate_rental_system.imageUpload.ImageUploadService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,23 +19,34 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final ImageUploadService imageUploadService;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, ImageUploadService imageUploadService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.imageUploadService = imageUploadService;
     }
 
     @Override
-    public void addUser(UserRequest user) {
+    public void addUser(UserRequest user, MultipartFile userPhoto) {
 
         //TODO check for admin user only or unauthenticated user
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-    if (user == null){
-        throw new IllegalArgumentException("User can not be null");
-    }
-    if (userRepository.findByUserName(user.getUserName()) != null){
-        throw new IllegalArgumentException("UserName already exists");
-    }
+        if (user == null) {
+            throw new IllegalArgumentException("User can not be null");
+        }
+        Optional<User> existingUser = userRepository.findByUserName(user.getUserName());
+        if (existingUser != null && existingUser.isPresent()) {
+            throw new IllegalArgumentException("UserName already exists");
+        }
+        String photoLocation = null;
+        if (userPhoto != null) {
+            List<String> photoLocations = imageUploadService.uploadImages(List.of(userPhoto));
+            if (!photoLocations.isEmpty()) {
+                photoLocation = photoLocations.get(0);
+            }
+        }
+
 
         User saveUser = new User(
                 user.getLastName(),
@@ -41,7 +55,7 @@ public class UserServiceImpl implements UserService {
                 encodedPassword,
                 user.getEmail(),
                 user.getPhoneNumber(),
-                user.getPhoto(),
+                photoLocation,
                 user.getAddress());
         saveUser.setRole(user.getRole());
         userRepository.save(saveUser);

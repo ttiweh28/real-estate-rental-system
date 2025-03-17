@@ -1,11 +1,13 @@
-package group3_real_estate_rental_system.Booking;
+package group3_real_estate_rental_system.booking;
 
-import group3_real_estate_rental_system.Booking.dto.BookingDTO;
-import group3_real_estate_rental_system.Booking.dto.BookingRequest;
-import group3_real_estate_rental_system.Booking.dto.BookingResponse;
+import group3_real_estate_rental_system.booking.dto.BookingDTO;
+import group3_real_estate_rental_system.booking.dto.BookingRequest;
+import group3_real_estate_rental_system.booking.dto.BookingResponse;
 import group3_real_estate_rental_system.common.BaseResponse;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/bookings")
+@PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
 public class BookingController {
 
     private final BookingService bookingService;
@@ -31,6 +34,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingResponse);
     }
 
+    // TODO make sure for properties owner and tenant to have access their own booking
     @GetMapping("/{id}")
     public ResponseEntity<BookingResponse> getBookingById(@PathVariable Long id) {
         BookingDTO booking = bookingService.getBookingById(id);
@@ -39,6 +43,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingResponse);
     }
 
+    @PreAuthorize("hasRole('TENANT')")
     @PostMapping()
     public ResponseEntity<?> addBooking(@RequestBody BookingRequest bookingRequest) {
         bookingService.addBooking(bookingRequest);
@@ -53,7 +58,7 @@ public class BookingController {
 
 
     //TODO - check again
-    @PutMapping("/{bookingId}/approvebooking/{propertyOwnerId}")
+    @PutMapping("/{bookingId}/approveBooking/{propertyOwnerId}")
     public ResponseEntity<String> approveBooking(
             @PathVariable Long bookingId,
             @PathVariable Long propertyOwnerId) {
@@ -61,6 +66,7 @@ public class BookingController {
         return ResponseEntity.ok("Booking approved successfully.");
     }
 
+    @PermitAll
     @GetMapping("/bookingStatuses")
     public ResponseEntity<List<String>> getAllBookingStatus() {
         List<String> bookingStatuses = Arrays.stream(BookingStatus.values())

@@ -3,20 +3,27 @@ package group3_real_estate_rental_system.Property.dto;
 import group3_real_estate_rental_system.Property.PropertyStatus;
 import group3_real_estate_rental_system.User.dto.UserBasicInfo;
 import group3_real_estate_rental_system.common.Address;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
 public class PropertyDTO {
 
+    private Long propertyId;
     private String propertyType;
     private String propertyDescription;
     private List<String> amenities;
+    @NotNull(message = "Status cannot be null")
+    @NotBlank(message = "Status cannot be blank")
     private PropertyStatus availabilityStatus;
     private List<String> propertyPhotos;
+    @NotNull(message = "Address cannot be null")
     private Address address;
     private UserBasicInfo owner;
 
-    public PropertyDTO(String propertyType, String propertyDescription, List<String> amenities, PropertyStatus availabilityStatus, List<String> propertyPhotos, Address address, UserBasicInfo owner) {
+    public PropertyDTO(Long propertyId, String propertyType, String propertyDescription, List<String> amenities, PropertyStatus availabilityStatus, List<String> propertyPhotos, Address address, UserBasicInfo owner) {
+        this.propertyId = propertyId;
         this.propertyType = propertyType;
         this.propertyDescription = propertyDescription;
         this.amenities = amenities;
@@ -24,6 +31,14 @@ public class PropertyDTO {
         this.propertyPhotos = propertyPhotos;
         this.address = address;
         this.owner = owner;
+    }
+
+    public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
     }
 
     public String getPropertyType() {

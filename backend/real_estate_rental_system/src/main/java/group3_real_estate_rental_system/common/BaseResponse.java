@@ -18,7 +18,7 @@ public class BaseResponse {
         return response(BaseResponse.API_RESPONSE_SUCCESS_CODE, BaseResponse.API_RESPONSE_SUCCESS_MESSAGE, responseClazz);
     }
 
-    public static <T extends BaseResponse> T failureResponse( String message, Class<T> responseClazz) {
+    public static <T extends BaseResponse> T failureResponse(String message, Class<T> responseClazz) {
         return response(BaseResponse.API_RESPONSE_FAILURE_CODE, message, responseClazz);
     }
 

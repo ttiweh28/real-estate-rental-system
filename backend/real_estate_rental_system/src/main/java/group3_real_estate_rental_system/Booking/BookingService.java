@@ -10,6 +10,15 @@ import group3_real_estate_rental_system.User.UserService;
 import java.util.List;
 
 public interface BookingService {
+    static BookingDTO buildBookingTDO(Booking booking) {
+        return booking != null ? new BookingDTO(booking.getId(),
+                booking.getBookingDate(),
+                booking.getBookingStatus(),
+                UserService.buildUserBasicInfoFromUserEntity(booking.getApprovedBy()),
+                UserService.buildUserBasicInfoFromUserEntity(booking.getTenant()),
+                PropertyService.buildPropertyDTO(new Property())) : null;
+    }
+
     void addBooking(BookingRequest booking);
 
     List<BookingDTO> getBookings();
@@ -21,13 +30,4 @@ public interface BookingService {
     List<BookingDTO> getBookingByTenantId(Long tenantId);
 
     void approveBooking(Long bookingId, Long propertyOwnerId);
-
-    static BookingDTO buildBookingTDO(Booking booking) {
-        return  new BookingDTO(booking.getId(),
-                booking.getBookingDate(),
-                booking.getBookingStatus(),
-                UserService.buildUserBasicInfoFromUserEntity(booking.getApprovedBy()),
-                UserService.buildUserBasicInfoFromUserEntity(booking.getTenant()),
-                PropertyService.buildPropertyDTO(new Property()));
-    }
 }

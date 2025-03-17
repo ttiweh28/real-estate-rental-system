@@ -2,9 +2,6 @@ package group3_real_estate_rental_system.User.dto;
 
 import group3_real_estate_rental_system.User.Role;
 import group3_real_estate_rental_system.common.Address;
-import jakarta.persistence.Embedded;
-
-import java.util.List;
 
 public class UserDTO {
     private Long userId;

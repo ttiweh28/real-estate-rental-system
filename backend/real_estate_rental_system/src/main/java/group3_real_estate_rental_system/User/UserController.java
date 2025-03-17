@@ -1,6 +1,7 @@
 package group3_real_estate_rental_system.User;
 
 import group3_real_estate_rental_system.User.dto.UserDTO;
+import group3_real_estate_rental_system.User.dto.UserRequest;
 import group3_real_estate_rental_system.User.dto.UserResponse;
 import group3_real_estate_rental_system.common.BaseResponse;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.util.List;
 public class UserController {
 
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -26,7 +27,8 @@ public class UserController {
         List<UserDTO> allUsers = userService.getAllUsers();
         UserResponse userresponse = BaseResponse.successResponse(UserResponse.class);
         userresponse.setUser(allUsers);
-        return ResponseEntity.ok(userresponse);    }
+        return ResponseEntity.ok(userresponse);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
@@ -46,9 +48,9 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody UserDTO user) {
+    public ResponseEntity<?> createUser(@RequestBody UserRequest user) {
         userService.addUser(user);
-        return new ResponseEntity<>( HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 

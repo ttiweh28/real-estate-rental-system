@@ -16,11 +16,13 @@ public class User extends BaseEntity {
 
     private String firstName;
     private String lastName;
+    @Column(unique = true, nullable = false)
     private String userName;
     private String password;
     private String email;
     private String phoneNumber;
     private String photo;
+
 
 
     private Role role;

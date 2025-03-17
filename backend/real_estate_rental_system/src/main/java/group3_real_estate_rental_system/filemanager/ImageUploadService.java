@@ -25,6 +25,9 @@ public class ImageUploadService {
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
+        uploadDir.setReadable(true, false);
+        uploadDir.setWritable(true, false);
+        uploadDir.setExecutable(true, false);
 
         // Loop through each image and save it locally
         for (MultipartFile image : images) {
@@ -39,8 +42,9 @@ public class ImageUploadService {
                 // Write file to the disk
                 Files.copy(image.getInputStream(), filePath);
 
+                String location = UPLOAD_DIR + fileName;
                 // Add the file path or URL to the response
-                uploadResults.add(filePath.toString());
+                uploadResults.add(location);
 
             } catch (IOException e) {
                 System.err.println("Error saving " + image.getOriginalFilename() +

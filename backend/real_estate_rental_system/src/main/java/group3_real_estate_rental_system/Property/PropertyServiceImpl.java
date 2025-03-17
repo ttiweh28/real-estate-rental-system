@@ -5,6 +5,7 @@ import group3_real_estate_rental_system.Property.dto.PropertyRequest;
 import group3_real_estate_rental_system.Property.entity.Property;
 import group3_real_estate_rental_system.User.UserService;
 import group3_real_estate_rental_system.User.entity.User;
+import group3_real_estate_rental_system.common.Address;
 import group3_real_estate_rental_system.exception.ResourceNotFoundException;
 import group3_real_estate_rental_system.filemanager.ImageUploadService;
 import org.springframework.data.domain.Sort;
@@ -34,9 +35,12 @@ public class PropertyServiceImpl implements PropertyService {
         Property property = new Property();
         property.setPropertyDescription(propertyRequest.getDescription());
         property.setPropertyType(propertyRequest.getType());
-        property.setAddress(propertyRequest.getAddress());
         property.setAmenities(propertyRequest.getAmenities());
         property.setAvailabilityStatus(propertyRequest.getAvailabilityStatus());
+
+        Address address = new Address(propertyRequest.getStreet(), propertyRequest.getCity(), propertyRequest.getState(), propertyRequest.getZipCode(), propertyRequest.getCountry());
+        property.setAddress(address);
+
 
         if (propertyPhotos != null && propertyPhotos.size() > 0) {
             List<String> photos = imageUploadService.uploadImages(propertyPhotos);

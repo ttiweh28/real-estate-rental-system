@@ -27,6 +27,12 @@ public class UserServiceImpl implements UserService {
 
         //TODO check for admin user only or unauthenticated user
         String encodedPassword = passwordEncoder.encode(user.getPassword());
+    if (user == null){
+        throw new IllegalArgumentException("User can not be null");
+    }
+    if (userRepository.findByUserName(user.getUserName()) != null){
+        throw new IllegalArgumentException("UserName already exists");
+    }
 
         User saveUser = new User(
                 user.getLastName(),

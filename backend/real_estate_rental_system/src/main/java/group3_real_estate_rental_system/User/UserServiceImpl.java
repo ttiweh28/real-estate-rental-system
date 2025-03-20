@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService {
     if (user == null){
         throw new IllegalArgumentException("User can not be null");
     }
-    if (userRepository.findByUserName(user.getUserName()) != null){
+        Optional<User> byUserName = userRepository.findByUserName(user.getUserName());
+        if (byUserName != null && !byUserName.isEmpty()){
         throw new IllegalArgumentException("UserName already exists");
     }
 

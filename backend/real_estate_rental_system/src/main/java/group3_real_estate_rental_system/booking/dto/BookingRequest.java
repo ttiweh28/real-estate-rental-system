@@ -1,6 +1,6 @@
-package group3_real_estate_rental_system.Booking.dto;
+package group3_real_estate_rental_system.booking.dto;
 
-import group3_real_estate_rental_system.Booking.BookingStatus;
+import group3_real_estate_rental_system.booking.BookingStatus;
 import group3_real_estate_rental_system.common.BaseRequest;
 
 import java.time.LocalDateTime;

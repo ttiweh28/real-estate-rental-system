@@ -1,7 +1,7 @@
-package group3_real_estate_rental_system.Booking.entity;
+package group3_real_estate_rental_system.booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import group3_real_estate_rental_system.Booking.BookingStatus;
+import group3_real_estate_rental_system.booking.BookingStatus;
 import group3_real_estate_rental_system.Property.entity.Property;
 import group3_real_estate_rental_system.User.entity.User;
 import group3_real_estate_rental_system.common.BaseEntity;

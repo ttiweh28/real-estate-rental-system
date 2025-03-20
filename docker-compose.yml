@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    volumes:
+      - ./logs/mysql.log:/var/log/mysql.log
+    command: --log-error=/var/log/mysql.log
+
+  kafka:
+    image: bitnami/kafka:latest
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+    volumes:
+      - ./logs/kafka.log:/opt/kafka/logs/server.log
+
+  springboot-app:
+    image: 902424/real-estate-rental-system:${VERSION} # Reads version from the VERSION file
+    container_name: backend
+    depends_on:
+      - mysql
+      - kafka
+    ports:
+      - "8080:8080"
+    environment:
+      DB_USERNAME: rsrs
+      DB_PASSWORD: root
+      SERVER_PORT: root
+      ACTIVE_PROFILE: kafka:9092
+    restart: always
+    volumes:
+      - ./logs/springboot.log:/app/logs/application.log
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  mysql_data:

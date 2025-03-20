@@ -1,4 +1,4 @@
-package group3_real_estate_rental_system.Booking;
+package group3_real_estate_rental_system.booking;
 
 public enum BookingStatus {
     PENDING,

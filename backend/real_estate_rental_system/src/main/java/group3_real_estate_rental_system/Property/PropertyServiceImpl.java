@@ -7,7 +7,7 @@ import group3_real_estate_rental_system.User.UserService;
 import group3_real_estate_rental_system.User.entity.User;
 import group3_real_estate_rental_system.common.Address;
 import group3_real_estate_rental_system.exception.ResourceNotFoundException;
-import group3_real_estate_rental_system.filemanager.ImageUploadService;
+import group3_real_estate_rental_system.imageUpload.ImageUploadService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

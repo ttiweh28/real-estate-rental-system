@@ -4,6 +4,7 @@ import group3_real_estate_rental_system.User.dto.UserBasicInfo;
 import group3_real_estate_rental_system.User.dto.UserDTO;
 import group3_real_estate_rental_system.User.dto.UserRequest;
 import group3_real_estate_rental_system.User.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface UserService {
                 user.getPhoto()) : null;
     }
 
-    void addUser(UserRequest user);
+    void addUser(UserRequest user, MultipartFile userPhoto);
 
     List<UserDTO> getAllUsers();
 

@@ -1,15 +1,19 @@
 package group3_real_estate_rental_system.Lease;
 
+import group3_real_estate_rental_system.Lease.dto.LeaseDTO;
+import group3_real_estate_rental_system.Lease.dto.LeaseRequest;
+import group3_real_estate_rental_system.Lease.dto.LeaseResponse;
+import group3_real_estate_rental_system.common.BaseResponse;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/Leases")
-@PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
+@RequestMapping("/leases")
 public class LeaseController {
 
     private final LeaseService leaseService;
@@ -18,29 +22,46 @@ public class LeaseController {
         this.leaseService = leaseService;
     }
 
+    // ✅ Get all leases (Admin, Tenant, Property Owner)
     @GetMapping
-    public List<Lease> getAllLeases() {
-        return leaseService.getAllLeases();
+    @PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
+    public ResponseEntity<LeaseResponse> getAllLeases() {
+        List<LeaseDTO> leases = leaseService.getAllLeases();
+        LeaseResponse response = BaseResponse.successResponse(LeaseResponse.class);
+        response.setLeases(leases);
+        return ResponseEntity.ok(response);
     }
 
+    // ✅ Get lease by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Lease> getLeaseById(@PathVariable Long id) {
-        Optional<Lease> lease = leaseService.getLeaseById(id);
-        return lease.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
+    public ResponseEntity<LeaseResponse> getLeaseById(@PathVariable Long id) {
+        LeaseDTO lease = leaseService.getLeaseById(id);
+        LeaseResponse response = BaseResponse.successResponse(LeaseResponse.class);
+        response.setLeases(List.of(lease));
+        return ResponseEntity.ok(response);
     }
 
+    // ✅ Create a lease
     @PostMapping
-    public Lease createLease(@RequestBody Lease lease) {
-        return leaseService.createLease(lease);
+    @PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
+    public ResponseEntity<?> createLease(@Valid @RequestBody LeaseRequest leaseRequest) {
+        leaseService.createLease(leaseRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // ✅ Update lease
     @PutMapping("/{id}")
-    public ResponseEntity<Lease> updateLease(@PathVariable Long id, @RequestBody Lease leaseDetails) {
-        return ResponseEntity.ok(leaseService.updateLease(id, leaseDetails));
+    @PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
+    public ResponseEntity<?> updateLease(@PathVariable Long id, @RequestBody LeaseDTO lease) {
+        leaseService.updateLease(id, lease);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
+    // ✅ Delete lease
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLease(@PathVariable Long id) {
+    @PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
+    public ResponseEntity<?> deleteLease(@PathVariable Long id) {
         leaseService.deleteLease(id);
         return ResponseEntity.noContent().build();
     }

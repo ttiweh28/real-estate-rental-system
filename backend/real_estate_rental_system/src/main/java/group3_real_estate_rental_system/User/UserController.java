@@ -4,6 +4,7 @@ import group3_real_estate_rental_system.User.dto.UserDTO;
 import group3_real_estate_rental_system.User.dto.UserRequest;
 import group3_real_estate_rental_system.User.dto.UserResponse;
 import group3_real_estate_rental_system.common.BaseResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -27,6 +28,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Operation(summary = "get list of users", description = "require ADMIN role")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BaseResponse> getUsers() {
         List<UserDTO> allUsers = userService.getAllUsers();
@@ -46,6 +48,7 @@ public class UserController {
 
     @GetMapping("/search")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(description = "require ADMIN role")
     public ResponseEntity<UserResponse> getUserByFirstName(@RequestParam String firstName) {
         List<UserDTO> users = userService.getUserByFirstName(firstName);
         UserResponse userresponse = BaseResponse.successResponse(UserResponse.class);

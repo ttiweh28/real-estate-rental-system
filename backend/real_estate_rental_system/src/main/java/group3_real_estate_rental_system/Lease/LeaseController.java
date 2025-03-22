@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/leases")
+@PreAuthorize("hasAnyRole('ADMIN', 'TENANT', 'PROPERTIES_OWNER')")
 public class LeaseController {
 
     private final LeaseService leaseService;

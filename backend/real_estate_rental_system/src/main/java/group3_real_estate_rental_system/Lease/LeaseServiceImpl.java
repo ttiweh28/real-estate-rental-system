@@ -109,7 +109,7 @@ public class LeaseServiceImpl implements LeaseService {
     private LeaseDTO convertToDTO(Lease lease) {
         PropertyDTO propertyDTO;
         propertyDTO = new PropertyDTO();
-        propertyDTO.setId(lease.getProperty().getId());
+        propertyDTO.setPropertyId(lease.getProperty().getId());
         // Set other property fields as needed...
 
         // Create UserBasicInfo objects using the constructor with first name, last name and photo

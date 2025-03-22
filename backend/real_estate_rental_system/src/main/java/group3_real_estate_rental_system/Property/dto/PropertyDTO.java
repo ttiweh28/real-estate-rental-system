@@ -22,6 +22,7 @@ public class PropertyDTO {
     private Address address;
     private UserBasicInfo owner;
 
+    public PropertyDTO() {}
     public PropertyDTO(Long propertyId, String propertyType, String propertyDescription, List<String> amenities, PropertyStatus availabilityStatus, List<String> propertyPhotos, Address address, UserBasicInfo owner) {
         this.propertyId = propertyId;
         this.propertyType = propertyType;

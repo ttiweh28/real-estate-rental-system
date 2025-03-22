@@ -1,61 +1,56 @@
-import { I_User } from "@/types/authTypes";
 import { AuthProvider } from "react-admin";
 
-const users: Record<string, I_User> = {
-  justine: {
-    id: "user123",
-    firstName: "Justine",
-    lastName: "Okumu",
-    fullName: "Okumu Justine",
-    username: "okumu",
-    role: "propertyOwner",
-    password: "1234",
-    avatar: "https://example.com/avatar.jpg",
-  },
-  tiffany: {
-    id: "user456",
-    firstName: "Tiffany",
-    lastName: "Lamaro",
-    fullName: "Lamaro Tiffany",
-    username: "tiffany",
-    role: "admin",
-    password: "1234",
-    avatar: "https://example.com/avatar.jpg",
-  },
-};
-
 const authProvider: AuthProvider = {
-  login: ({ username, password }: { username: string; password: string }) => {
-    if (users[username] && users[username].password === password) {
-      localStorage.setItem("auth", "true");
-      localStorage.setItem("username", username);
-      return Promise.resolve();
-    }
-    return Promise.reject(new Error("Invalid credentials"));
+  login: ({ username, password }) => {
+    return fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    }).then((response) => {
+      if (response.ok) {
+        return response.json().then((data) => {
+            localStorage.setItem("real-estate-auth-token", data.jwt);
+            localStorage.setItem("real-estate-auth-user", JSON.stringify(data.user));
+            return Promise.resolve();
+        });
+      } else {
+        return Promise.reject(new Error("Invalid credentials"));
+      }
+    });
   },
   logout: () => {
-    localStorage.removeItem("auth");
-    localStorage.removeItem("username");
+    localStorage.removeItem("real-estate-auth-token");
+    localStorage.removeItem("real-estate-auth-user");
     return Promise.resolve();
   },
   checkAuth: () => {
-    return localStorage.getItem("auth") ? Promise.resolve() : Promise.reject();
+    // TODO: Check if token is valid here
+    return localStorage.getItem("real-estate-auth-token") ? Promise.resolve() : Promise.reject();
   },
-  checkError: () => {
+  checkError: (error) => {
+    if (error.status === 401 || error.status === 403) {
+      localStorage.removeItem('auth');
+      return Promise.reject();
+    }
     return Promise.resolve();
   },
   getPermissions: () => {
-    const username = localStorage.getItem("username");
-    return username && users[username]
-      ? Promise.resolve(users[username].role)
-      : Promise.reject();
+    const auth = localStorage.getItem("real-estate-auth-token");
+    const authUser = localStorage.getItem("real-estate-auth-user")
+    if (!auth || !authUser) {
+      return Promise.reject(new Error("Invalid credentials"));
+    }
+    return Promise.resolve(JSON.parse(authUser)?.role)
   },
   getIdentity: () => {
-    const username = localStorage.getItem("username");
-    if (username && users[username]) {
-      return Promise.resolve(users[username]);
+    const currentUser = JSON.parse(localStorage.getItem('real-estate-auth-user') || '{}');
+    const adminUser = {...currentUser, fullName: `${currentUser.firstName} ${currentUser.lastName}`}
+    if (!currentUser || !adminUser) {
+      return Promise.reject(new Error("Invalid credentials"));
     }
-    return Promise.reject(new Error("User not found"));
+    return adminUser
   },
 };
 

@@ -69,7 +69,7 @@ const CreateProperty = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      await dataProvider.create("properties", { data: formData });
+      await dataProvider.create("properties", { data: {...formData, banner:  URL.createObjectURL(formData.images[0])}});
       notify("Property created successfully", { type: "success" });
       redirect("/properties");
     } catch (error) {

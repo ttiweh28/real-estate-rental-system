@@ -1,51 +1,19 @@
 package group3_real_estate_rental_system.Lease;
 
-
-import group3_real_estate_rental_system.Property.PropertyRepository;
-import group3_real_estate_rental_system.User.UserService;
-import org.springframework.stereotype.Service;
+import group3_real_estate_rental_system.Lease.dto.LeaseDTO;
+import group3_real_estate_rental_system.Lease.dto.LeaseRequest;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class LeaseService {
-    private final LeaseRepository leaseRepository;
-    private final UserService userService;
-    private final PropertyRepository propertyRepository;
+public interface LeaseService {
 
-    public LeaseService(LeaseRepository leaseRepository, UserService userService, PropertyRepository propertyRepository) {
-        this.leaseRepository = leaseRepository;
-        this.userService = userService;
-        this.propertyRepository = propertyRepository;
-    }
+    void createLease(LeaseRequest leaseRequest);
 
-    public List<Lease> getAllLeases() {
-        return leaseRepository.findAll();
-    }
+    List<LeaseDTO> getAllLeases();
 
-    public Optional<Lease> getLeaseById(Long id) {
-        return leaseRepository.findById(id);
-    }
+    LeaseDTO getLeaseById(Long id);
 
-    public Lease createLease(Lease lease) {
-        return leaseRepository.save(lease);
-    }
+    void updateLease(Long id, LeaseDTO leaseDTO);
 
-    public Lease updateLease(Long id, Lease leaseDetails) {
-        return leaseRepository.findById(id).map(lease -> {
-            lease.setTenant(leaseDetails.getTenant());
-            lease.setPropertyOwner(leaseDetails.getPropertyOwner());
-            lease.setProperty(leaseDetails.getProperty());
-            lease.setTenantSignedDate(leaseDetails.getTenantSignedDate());
-            lease.setPropertyOwnerSignedDate(leaseDetails.getPropertyOwnerSignedDate());
-            lease.setExpiryDate(leaseDetails.getExpiryDate());
-            lease.setLeaseURL(leaseDetails.getLeaseURL());
-            return leaseRepository.save(lease);
-        }).orElseThrow(() -> new RuntimeException("Lease not found"));
-    }
-
-    public void deleteLease(Long id) {
-        leaseRepository.deleteById(id);
-    }
+    void deleteLease(Long id);
 }

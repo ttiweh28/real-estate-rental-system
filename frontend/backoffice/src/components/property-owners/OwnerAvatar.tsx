@@ -1,5 +1,6 @@
 import { useRecordContext } from "react-admin";
 import { Avatar } from "@mui/material";
+import { apiUrl } from "@/httpClient";
 
 export const PropertyOwnerAvatar = ({
   size = "normal",
@@ -17,7 +18,7 @@ export const PropertyOwnerAvatar = ({
 
   return (
     <Avatar
-      src={record.avatar}
+      src={`${apiUrl}/${record.photo}`}
       sx={{
         borderRadius: "50%",
         ...sizeStyles[size],

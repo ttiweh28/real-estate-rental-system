@@ -8,7 +8,8 @@ export const ListPropertyOwners: React.FC = () => (
         <PropertyOwnerAvatar size="normal" />
         <TextField source="firstName" />
         <TextField source="lastName" />
-        <TextField source="username" />
+        <TextField source="email" />
+        <TextField source="role" />
     </Datagrid>
   </List>
 );
